@@ -1,0 +1,4 @@
+https://www.saleae.com/downloads
+
+The Saleae Logic Analyzer is the golden nugget, the levan in the loaf, the must-have-it-or-we-are-all-gonna-die device. Used as the ultimate logic analyzer/scope.
+The Rover Team will (hopefully) purchase several of these for team members to use. Hard to debug various things without one.

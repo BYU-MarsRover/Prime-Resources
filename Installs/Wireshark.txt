@@ -1,0 +1,4 @@
+https://www.wireshark.org/download.html
+
+Wireshark is the program that allows us to monitor and check the packets that the Rover Comms system pushes around. Critical to see if the UDP packets are working.
+Wireshark is also very useful for general-purpose network troubleshooting. Discovering the IP Address for the Ubiquity RocketM2 transceivers, for example.

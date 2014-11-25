@@ -1,0 +1,72 @@
+BYU Mars Rover Team 
+Aerial Vehicle Regs and Specs
+Stephen Carlson
+
+Reiterated Prompt from URC 2013 Rules:
+1.b.ii. Any airborne vehicles must meet any and all FAA (United States Federal Aviation Authority) guidelines that apply to operating unmanned aircraft in a remote area. It will be the responsibility of each team to research any such FAA requirements and provide documentation to the judges prior to April 29, 2013.
+
+Survey of Regulations
+
+	Flight Regulations
+		Grey Area
+			AC 91-57 Model Aircraft Operating Standards (Recommendation, non-enforcable)
+				At least 3 statute miles from any airport
+				Under 400 feet AGL
+			NPRM in 2007
+				No commercial operations allowed while the FAA drags its feet on making rules
+			FAA Modernization and Reform Act of 2012
+				FAA required to integrate commercial use SUAS in NAS by 2015
+		Hard/Firm Regulations
+			CFR 14 § 91.119 (c) 
+				Manned aircraft required to maintain 500 feet from any person, vessel, vehicle, or structure. 
+			CFR 14 § 101.1 Unmanned Free Balloons, Kites, Rockets:
+				Kites weighing less than 5 lbs are unregulated 
+				Unmanned free balloons weighing less than 4 lbs are unregulated
+				Regardless of weight, operators are to use good judgement
+			
+	Radio Regulations
+		General Scope/Definition
+			UAVs operate as Amateur TV (ATV) stations
+			Also, considered point to multi-point in some cases
+		CFR 47 § 97.119 
+			Transmit callsign on end of and every 10 minutes during ATV transmission
+		CFR 47 § 97.215 
+			Control link less than 1 Watt
+			
+Team Equipment and Competition Environment Descriptions 
+		
+	Local Conditions and Airspace (At the Mars Desert Research Station, 38.4059,-110.7918)
+		Class G (Uncontrolled) up to 1200 ceiling, Class E on top.
+		Nearest Airport is Hanksville (KHVE) at 7.7 km (4.2 nm) (4.8 sm)
+			CTAF is 122.8 MHz
+			Can use SDR to receive CTAF; decode ADS-B and Mode-S
+
+	Flight Vehicle Descriptions
+		Multicopter
+			1.0 kg
+			600 mm Diameter
+		"Orange Hawk" VTOL Hybrid
+			1.2kg
+			1.0 m Wingspan
+			
+	Frequency Band Usage	
+		Service				Frequency		Power
+		Video Telemetry	A	2.410 GHz 		500 mW
+		Video Telemetry B	1.280 GHz		500 mW
+		R/C Control	A		72.750 MHz 		170 mW
+		R/C Control	B		433 MHz			500 mW
+		
+	Pilot Qualifications (Steve Carlson)
+		4 Years of FPV experience, 180+ flights with fixed-wing and multicopter
+		10 to 12 instances as a UAV safety pilot for the BYU UAV research lab
+		Active Private Pilot
+			97+ Hours
+			By competition date, will be current on:
+				Class-III Medical
+				Biannial Review
+				90 day currency for passengers in daylight hours.
+			
+Synopsis
+	For the 2013 URC, the BYU Mars Rover Team will field UAVs in the 1.0 kg to 2.0 kg weight range. So long as these vehicles are not operated for profit or other commercial use, the activity is legal. Until the FAA releases a complete set of rules, there are no hard-fast regulations; only guidelines drawn in AC 91-57 on Model Aircraft Operation from the 1980's. The more recent NPRM requested an end to all commercial activities until rules can be made, hence the reason we cannot preform for profit. Otherwise, the issue is left open. On the state-law level, Utah has not drawn any regulations governing the use of UAVs.
+	
+	We have preformed with a vehicle in this class before, and have designed a new vehicle for the competiton with the intent to operate safely and efficiently in the varied tasks to be completed.

@@ -1,0 +1,4 @@
+http://www.castlecreations.com/downloads/cl-download.html
+
+Use this link to avoid Castle Creation's annoying registration process that you are forced to do in order to get a download.
+For those un-initiated: The CastleLink is the widget we use to reprogram the Rover's Motor Controllers, which are made by Castle Creations.

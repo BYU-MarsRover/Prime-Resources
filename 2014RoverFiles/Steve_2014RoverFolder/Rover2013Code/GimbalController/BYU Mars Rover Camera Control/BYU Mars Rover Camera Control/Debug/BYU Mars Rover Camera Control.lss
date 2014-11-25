@@ -1,0 +1,2425 @@
+
+BYU Mars Rover Camera Control.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000000a  00800100  00000e68  00000efc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000e68  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000043e  0080010a  0080010a  00000f06  2**0
+                  ALLOC
+  3 .stab         000006cc  00000000  00000000  00000f08  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000085  00000000  00000000  000015d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 000000c0  00000000  00000000  00001660  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000011fe  00000000  00000000  00001720  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000376  00000000  00000000  0000291e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000073c  00000000  00000000  00002c94  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000003fc  00000000  00000000  000033d0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000549  00000000  00000000  000037cc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000f21  00000000  00000000  00003d15  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000048  00000000  00000000  00004c36  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  2c:	0c 94 3d 02 	jmp	0x47a	; 0x47a <__vector_11>
+  30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  38:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  44:	0c 94 10 04 	jmp	0x820	; 0x820 <__vector_17>
+  48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  54:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  5c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  60:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  64:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	e8 e6       	ldi	r30, 0x68	; 104
+  7c:	fe e0       	ldi	r31, 0x0E	; 14
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	aa 30       	cpi	r26, 0x0A	; 10
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+
+0000008a <__do_clear_bss>:
+  8a:	15 e0       	ldi	r17, 0x05	; 5
+  8c:	aa e0       	ldi	r26, 0x0A	; 10
+  8e:	b1 e0       	ldi	r27, 0x01	; 1
+  90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
+
+00000092 <.do_clear_bss_loop>:
+  92:	1d 92       	st	X+, r1
+
+00000094 <.do_clear_bss_start>:
+  94:	a8 34       	cpi	r26, 0x48	; 72
+  96:	b1 07       	cpc	r27, r17
+  98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
+  9a:	0e 94 39 06 	call	0xc72	; 0xc72 <main>
+  9e:	0c 94 32 07 	jmp	0xe64	; 0xe64 <_exit>
+
+000000a2 <__bad_interrupt>:
+  a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a6 <Initialize_SPI_Slave>:
+ Initializes the SPI interface as a slave with interrupts with the following options:
+		-MSB or LSB first
+**************************************************************************************************/
+void Initialize_SPI_Slave(unsigned int dataMode){
+	
+	SPCR |= (1 << SPE); //Enable SPI
+  a6:	8c b5       	in	r24, 0x2c	; 44
+  a8:	80 64       	ori	r24, 0x40	; 64
+  aa:	8c bd       	out	0x2c, r24	; 44
+	SPCR |= (1 << SPIE); //Enable SPI interrupts
+  ac:	8c b5       	in	r24, 0x2c	; 44
+  ae:	80 68       	ori	r24, 0x80	; 128
+  b0:	8c bd       	out	0x2c, r24	; 44
+	//SPCR |= (1 << MSTR); //set to SPI master
+	//SPCR |= (dataMode << DORD); //LSB or MSB first
+	DDRB |= (1 << MISO); //set MISO (PB4) as an output, all others are inputs
+  b2:	24 9a       	sbi	0x04, 4	; 4
+	SPDR = 0; //clear out the SPI data register before it is used	
+  b4:	1e bc       	out	0x2e, r1	; 46
+}
+  b6:	08 95       	ret
+
+000000b8 <SPI_Slave_Receive>:
+// Receives a byte over SPI and returns it
+//*****************************************************************************************************
+
+char SPI_Slave_Receive(void){
+	
+	while(!(SPSR & (1<<SPIF))) {}; // Wait for reception to finish
+  b8:	0d b4       	in	r0, 0x2d	; 45
+  ba:	07 fe       	sbrs	r0, 7
+  bc:	fd cf       	rjmp	.-6      	; 0xb8 <SPI_Slave_Receive>
+
+	return SPDR; //return data in register
+  be:	8e b5       	in	r24, 0x2e	; 46
+  c0:	08 95       	ret
+
+000000c2 <Initialize_TWI_Master>:
+		-Speed 100KHz
+**************************************************************************************************/
+
+void Initialize_TWI_Master(){
+	//TWCR = (1 << TWEN); // turn on TWI
+	TWBR = 72;  //100KHz at F_CPU = 16MHz
+  c2:	88 e4       	ldi	r24, 0x48	; 72
+  c4:	80 93 b8 00 	sts	0x00B8, r24
+}
+  c8:	08 95       	ret
+
+000000ca <TWI_Send_Start>:
+	USART_Transmit('E');
+	USART_Transmit(data);
+}
+
+int TWI_Send_Start(unsigned char expectedResult){
+	TWCR = (1<<TWINT)|(1<<TWSTA)|(1 << TWEN); //send START condition
+  ca:	84 ea       	ldi	r24, 0xA4	; 164
+  cc:	80 93 bc 00 	sts	0x00BC, r24
+		
+	while (!(TWCR & (1<<TWINT))) {}; //Wait for START to transmit
+  d0:	ec eb       	ldi	r30, 0xBC	; 188
+  d2:	f0 e0       	ldi	r31, 0x00	; 0
+  d4:	80 81       	ld	r24, Z
+  d6:	88 23       	and	r24, r24
+  d8:	ec f7       	brge	.-6      	; 0xd4 <TWI_Send_Start+0xa>
+//	if ((TWSR & 0xF8) != expectedResult){ //check and make sure START was actually sent
+//		TWI_Error(TWSR);
+//		return 0;
+//	}
+	return 1;
+}
+  da:	81 e0       	ldi	r24, 0x01	; 1
+  dc:	90 e0       	ldi	r25, 0x00	; 0
+  de:	08 95       	ret
+
+000000e0 <TWI_Send_Data>:
+
+int TWI_Send_Data(unsigned char data, unsigned char expectedResult){
+	TWDR = data; //eeprom I2C address and set to write	
+  e0:	80 93 bb 00 	sts	0x00BB, r24
+	TWCR = (1<<TWINT) | (1<<TWEN);	//clear TWINT flag to start transmission	
+  e4:	84 e8       	ldi	r24, 0x84	; 132
+  e6:	80 93 bc 00 	sts	0x00BC, r24
+		
+	while (!(TWCR & (1<<TWINT))) {}; //Wait for transmission to complete
+  ea:	ec eb       	ldi	r30, 0xBC	; 188
+  ec:	f0 e0       	ldi	r31, 0x00	; 0
+  ee:	80 81       	ld	r24, Z
+  f0:	88 23       	and	r24, r24
+  f2:	ec f7       	brge	.-6      	; 0xee <TWI_Send_Data+0xe>
+//	if ((TWSR & 0xF8) != expectedResult){ //check and make sure SLA_W was actually sent
+//		TWI_Error(TWSR);
+//		return 0;
+//	}
+	return 1;
+}
+  f4:	81 e0       	ldi	r24, 0x01	; 1
+  f6:	90 e0       	ldi	r25, 0x00	; 0
+  f8:	08 95       	ret
+
+000000fa <TWI_Send_Stop>:
+
+int TWI_Send_Stop(){
+	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTO); //transmit stop condition
+  fa:	84 e9       	ldi	r24, 0x94	; 148
+  fc:	80 93 bc 00 	sts	0x00BC, r24
+
+	
+		
+	return 1;
+}
+ 100:	81 e0       	ldi	r24, 0x01	; 1
+ 102:	90 e0       	ldi	r25, 0x00	; 0
+ 104:	08 95       	ret
+
+00000106 <TWI_Receive_Data>:
+
+unsigned char TWI_Receive_Data(unsigned char expectedResult){
+	
+	if (expectedResult == MR_DATA_ACK)
+ 106:	80 35       	cpi	r24, 0x50	; 80
+ 108:	21 f4       	brne	.+8      	; 0x112 <TWI_Receive_Data+0xc>
+		TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);	//clear TWINT flag to start reading
+ 10a:	84 ec       	ldi	r24, 0xC4	; 196
+ 10c:	80 93 bc 00 	sts	0x00BC, r24
+ 110:	03 c0       	rjmp	.+6      	; 0x118 <TWI_Receive_Data+0x12>
+	else
+		TWCR = (1<<TWINT) | (1<<TWEN);	//clear TWINT flag to start reading	
+ 112:	84 e8       	ldi	r24, 0x84	; 132
+ 114:	80 93 bc 00 	sts	0x00BC, r24
+		
+	while (!(TWCR & (1<<TWINT))) {}; //Wait for transmission to complete
+ 118:	ec eb       	ldi	r30, 0xBC	; 188
+ 11a:	f0 e0       	ldi	r31, 0x00	; 0
+ 11c:	80 81       	ld	r24, Z
+ 11e:	88 23       	and	r24, r24
+ 120:	ec f7       	brge	.-6      	; 0x11c <TWI_Receive_Data+0x16>
+			
+//	if ((TWSR & 0xF8) != expectedResult){ //check and make sure SLA_R was actually sent
+//		TWI_Error(TWSR);
+//	}
+	
+	return TWDR;
+ 122:	80 91 bb 00 	lds	r24, 0x00BB
+ 126:	08 95       	ret
+
+00000128 <Initialize_USART>:
+//*****************************************************************************************************
+// Initializes the USART to the predefined baud rate (see the #defines in USART.h) and 8-N-1 framing
+//*****************************************************************************************************
+
+void Initialize_USART(unsigned int myubrr){
+	UBRR0H = ((myubrr) >> 8);  //Load upper 8 bits of baud rate prescaler into to UBRR0 register
+ 128:	90 93 c5 00 	sts	0x00C5, r25
+	UBRR0L = myubrr;  //load the lower 8 bits of the baud rate prescaler into the UBRR0 register
+ 12c:	80 93 c4 00 	sts	0x00C4, r24
+	UCSR0B |= (1 << RXEN0) | (1 << TXEN0);  //enable RX and TX circuitry
+ 130:	e1 ec       	ldi	r30, 0xC1	; 193
+ 132:	f0 e0       	ldi	r31, 0x00	; 0
+ 134:	80 81       	ld	r24, Z
+ 136:	88 61       	ori	r24, 0x18	; 24
+ 138:	80 83       	st	Z, r24
+	//UCSR0C |= (1 << UPM01); // enable this for even parity
+	//UCSR0C &= (0 << UPM00);
+}
+ 13a:	08 95       	ret
+
+0000013c <USART_Transmit>:
+//*****************************************************************************************************
+// Waits until the USART data register is ready to send and then sends the byte
+//*****************************************************************************************************
+
+void USART_Transmit(unsigned char data){
+	while((UCSR0A & (1 << UDRE0)) == 0 ) {};  //do nothing until UDR is ready to send
+ 13c:	e0 ec       	ldi	r30, 0xC0	; 192
+ 13e:	f0 e0       	ldi	r31, 0x00	; 0
+ 140:	90 81       	ld	r25, Z
+ 142:	95 ff       	sbrs	r25, 5
+ 144:	fd cf       	rjmp	.-6      	; 0x140 <USART_Transmit+0x4>
+	UDR0 = data; //transmit byte
+ 146:	80 93 c6 00 	sts	0x00C6, r24
+}
+ 14a:	08 95       	ret
+
+0000014c <TWI_Error>:
+	TWBR = 72;  //100KHz at F_CPU = 16MHz
+}
+
+
+
+void TWI_Error(unsigned char data){
+ 14c:	cf 93       	push	r28
+ 14e:	c8 2f       	mov	r28, r24
+	/*USART_Transmit('\n');
+	USART_Transmit('\r');*/
+	USART_Transmit('E');
+ 150:	85 e4       	ldi	r24, 0x45	; 69
+ 152:	0e 94 9e 00 	call	0x13c	; 0x13c <USART_Transmit>
+	USART_Transmit(data);
+ 156:	8c 2f       	mov	r24, r28
+ 158:	0e 94 9e 00 	call	0x13c	; 0x13c <USART_Transmit>
+}
+ 15c:	cf 91       	pop	r28
+ 15e:	08 95       	ret
+
+00000160 <RingBufferInit>:
+#include "RingBuffer.h"	
+/****************************************************************************************
+RingBufferInit takes a pointer to a ringBuffer and a size which is usually equal to 
+BUFFER_SIZE, and initialized the ringBuffer.  The data array is not initialized.
+****************************************************************************************/
+void RingBufferInit(RingBuffer queue){
+ 160:	fc 01       	movw	r30, r24
+	queue->readPointer = 0;
+ 162:	11 82       	std	Z+1, r1	; 0x01
+	queue->writePointer = 0;
+ 164:	10 82       	st	Z, r1
+}
+ 166:	08 95       	ret
+
+00000168 <RingBufferIsEmpty>:
+
+int RingBufferIsEmpty(RingBuffer queue){
+ 168:	fc 01       	movw	r30, r24
+	return (queue->writePointer == queue->readPointer);
+ 16a:	21 e0       	ldi	r18, 0x01	; 1
+ 16c:	30 e0       	ldi	r19, 0x00	; 0
+ 16e:	90 81       	ld	r25, Z
+ 170:	81 81       	ldd	r24, Z+1	; 0x01
+ 172:	98 17       	cp	r25, r24
+ 174:	11 f0       	breq	.+4      	; 0x17a <RingBufferIsEmpty+0x12>
+ 176:	20 e0       	ldi	r18, 0x00	; 0
+ 178:	30 e0       	ldi	r19, 0x00	; 0
+}
+ 17a:	82 2f       	mov	r24, r18
+ 17c:	93 2f       	mov	r25, r19
+ 17e:	08 95       	ret
+
+00000180 <RingBufferIsFull>:
+
+int RingBufferIsFull(RingBuffer queue){
+ 180:	fc 01       	movw	r30, r24
+	return (((queue->writePointer + 1) % BUFFER_SIZE) == queue->readPointer);
+ 182:	80 81       	ld	r24, Z
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	01 96       	adiw	r24, 0x01	; 1
+ 188:	60 e0       	ldi	r22, 0x00	; 0
+ 18a:	72 e0       	ldi	r23, 0x02	; 2
+ 18c:	0e 94 0b 07 	call	0xe16	; 0xe16 <__divmodhi4>
+ 190:	9c 01       	movw	r18, r24
+ 192:	41 81       	ldd	r20, Z+1	; 0x01
+ 194:	50 e0       	ldi	r21, 0x00	; 0
+ 196:	81 e0       	ldi	r24, 0x01	; 1
+ 198:	90 e0       	ldi	r25, 0x00	; 0
+ 19a:	24 17       	cp	r18, r20
+ 19c:	35 07       	cpc	r19, r21
+ 19e:	11 f0       	breq	.+4      	; 0x1a4 <RingBufferIsFull+0x24>
+ 1a0:	80 e0       	ldi	r24, 0x00	; 0
+ 1a2:	90 e0       	ldi	r25, 0x00	; 0
+}
+ 1a4:	08 95       	ret
+
+000001a6 <RingBufferFillCount>:
+
+int RingBufferFillCount(RingBuffer queue){
+ 1a6:	fc 01       	movw	r30, r24
+	return (((queue->writePointer + BUFFER_SIZE) - queue->readPointer) % BUFFER_SIZE);
+ 1a8:	80 81       	ld	r24, Z
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+ 1ac:	80 50       	subi	r24, 0x00	; 0
+ 1ae:	9e 4f       	sbci	r25, 0xFE	; 254
+ 1b0:	21 81       	ldd	r18, Z+1	; 0x01
+ 1b2:	82 1b       	sub	r24, r18
+ 1b4:	91 09       	sbc	r25, r1
+ 1b6:	60 e0       	ldi	r22, 0x00	; 0
+ 1b8:	72 e0       	ldi	r23, 0x02	; 2
+ 1ba:	0e 94 0b 07 	call	0xe16	; 0xe16 <__divmodhi4>
+}
+ 1be:	08 95       	ret
+
+000001c0 <RingBufferHasRoom>:
+
+int RingBufferHasRoom(RingBuffer queue, int packetSize){
+ 1c0:	cf 93       	push	r28
+ 1c2:	df 93       	push	r29
+ 1c4:	eb 01       	movw	r28, r22
+	//we fill the buffer with a certain # of byte chunks, so there must be room to add them and leave an empty space
+	int fillCount = RingBufferFillCount(queue);
+ 1c6:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <RingBufferFillCount>
+	return (fillCount < (BUFFER_SIZE - packetSize)); 
+ 1ca:	40 e0       	ldi	r20, 0x00	; 0
+ 1cc:	52 e0       	ldi	r21, 0x02	; 2
+ 1ce:	4c 1b       	sub	r20, r28
+ 1d0:	5d 0b       	sbc	r21, r29
+ 1d2:	21 e0       	ldi	r18, 0x01	; 1
+ 1d4:	30 e0       	ldi	r19, 0x00	; 0
+ 1d6:	84 17       	cp	r24, r20
+ 1d8:	95 07       	cpc	r25, r21
+ 1da:	14 f0       	brlt	.+4      	; 0x1e0 <RingBufferHasRoom+0x20>
+ 1dc:	20 e0       	ldi	r18, 0x00	; 0
+ 1de:	30 e0       	ldi	r19, 0x00	; 0
+}	
+ 1e0:	82 2f       	mov	r24, r18
+ 1e2:	93 2f       	mov	r25, r19
+ 1e4:	df 91       	pop	r29
+ 1e6:	cf 91       	pop	r28
+ 1e8:	08 95       	ret
+
+000001ea <RingBufferSpaceFree>:
+	
+int RingBufferSpaceFree(RingBuffer queue){
+	int fillCount = RingBufferFillCount(queue);
+ 1ea:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <RingBufferFillCount>
+	return (BUFFER_SIZE - (fillCount + 1));
+ 1ee:	80 95       	com	r24
+ 1f0:	90 95       	com	r25
+ 1f2:	80 50       	subi	r24, 0x00	; 0
+ 1f4:	9e 4f       	sbci	r25, 0xFE	; 254
+}
+ 1f6:	08 95       	ret
+
+000001f8 <RingBufferPeek>:
+
+int RingBufferPeek(RingBuffer queue, unsigned char *data){
+ 1f8:	0f 93       	push	r16
+ 1fa:	1f 93       	push	r17
+ 1fc:	cf 93       	push	r28
+ 1fe:	df 93       	push	r29
+ 200:	ec 01       	movw	r28, r24
+ 202:	8b 01       	movw	r16, r22
+	//return the char stored at the "front" of the queue, but leave it in the array.
+	if (!RingBufferIsEmpty(queue)){
+ 204:	0e 94 b4 00 	call	0x168	; 0x168 <RingBufferIsEmpty>
+ 208:	00 97       	sbiw	r24, 0x00	; 0
+ 20a:	49 f4       	brne	.+18     	; 0x21e <RingBufferPeek+0x26>
+		*data = queue->data[queue->readPointer];
+ 20c:	89 81       	ldd	r24, Y+1	; 0x01
+ 20e:	c8 0f       	add	r28, r24
+ 210:	d1 1d       	adc	r29, r1
+ 212:	8b 81       	ldd	r24, Y+3	; 0x03
+ 214:	f8 01       	movw	r30, r16
+ 216:	80 83       	st	Z, r24
+		return 0;
+ 218:	80 e0       	ldi	r24, 0x00	; 0
+ 21a:	90 e0       	ldi	r25, 0x00	; 0
+ 21c:	02 c0       	rjmp	.+4      	; 0x222 <RingBufferPeek+0x2a>
+	}
+	else
+		return 1;	
+ 21e:	81 e0       	ldi	r24, 0x01	; 1
+ 220:	90 e0       	ldi	r25, 0x00	; 0
+}
+ 222:	df 91       	pop	r29
+ 224:	cf 91       	pop	r28
+ 226:	1f 91       	pop	r17
+ 228:	0f 91       	pop	r16
+ 22a:	08 95       	ret
+
+0000022c <RingBufferDequeue>:
+	}
+	else
+		return 1;	
+}		
+		
+int RingBufferDequeue(RingBuffer queue, unsigned char *data){
+ 22c:	0f 93       	push	r16
+ 22e:	1f 93       	push	r17
+ 230:	cf 93       	push	r28
+ 232:	df 93       	push	r29
+ 234:	ec 01       	movw	r28, r24
+ 236:	8b 01       	movw	r16, r22
+	//return the char stored at the "front" of the queue, and move the pointer forward
+	if (!RingBufferIsEmpty(queue)){
+ 238:	0e 94 b4 00 	call	0x168	; 0x168 <RingBufferIsEmpty>
+ 23c:	00 97       	sbiw	r24, 0x00	; 0
+ 23e:	69 f4       	brne	.+26     	; 0x25a <RingBufferDequeue+0x2e>
+		*data = queue->data[queue->readPointer];
+ 240:	89 81       	ldd	r24, Y+1	; 0x01
+ 242:	fe 01       	movw	r30, r28
+ 244:	e8 0f       	add	r30, r24
+ 246:	f1 1d       	adc	r31, r1
+ 248:	83 81       	ldd	r24, Z+3	; 0x03
+ 24a:	f8 01       	movw	r30, r16
+ 24c:	80 83       	st	Z, r24
+		queue->readPointer++;
+ 24e:	89 81       	ldd	r24, Y+1	; 0x01
+ 250:	8f 5f       	subi	r24, 0xFF	; 255
+ 252:	89 83       	std	Y+1, r24	; 0x01
+		queue->readPointer %= BUFFER_SIZE;
+		return 0;
+ 254:	80 e0       	ldi	r24, 0x00	; 0
+ 256:	90 e0       	ldi	r25, 0x00	; 0
+ 258:	02 c0       	rjmp	.+4      	; 0x25e <RingBufferDequeue+0x32>
+	}
+	else
+		return 1;	
+ 25a:	81 e0       	ldi	r24, 0x01	; 1
+ 25c:	90 e0       	ldi	r25, 0x00	; 0
+}
+ 25e:	df 91       	pop	r29
+ 260:	cf 91       	pop	r28
+ 262:	1f 91       	pop	r17
+ 264:	0f 91       	pop	r16
+ 266:	08 95       	ret
+
+00000268 <RingBufferDequeueArray>:
+	}
+	else
+		return 1;	
+}
+
+int RingBufferDequeueArray(RingBuffer queue, unsigned char *array, int size){
+ 268:	cf 92       	push	r12
+ 26a:	df 92       	push	r13
+ 26c:	ef 92       	push	r14
+ 26e:	ff 92       	push	r15
+ 270:	0f 93       	push	r16
+ 272:	1f 93       	push	r17
+ 274:	cf 93       	push	r28
+ 276:	df 93       	push	r29
+ 278:	6c 01       	movw	r12, r24
+ 27a:	7b 01       	movw	r14, r22
+ 27c:	ea 01       	movw	r28, r20
+	int fillCount = RingBufferFillCount(queue);
+ 27e:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <RingBufferFillCount>
+	if (fillCount >= size){
+ 282:	8c 17       	cp	r24, r28
+ 284:	9d 07       	cpc	r25, r29
+ 286:	9c f0       	brlt	.+38     	; 0x2ae <RingBufferDequeueArray+0x46>
+		int i;		
+		for(i = 0; i < size; i++)
+ 288:	1c 16       	cp	r1, r28
+ 28a:	1d 06       	cpc	r1, r29
+ 28c:	9c f4       	brge	.+38     	; 0x2b4 <RingBufferDequeueArray+0x4c>
+ 28e:	00 e0       	ldi	r16, 0x00	; 0
+ 290:	10 e0       	ldi	r17, 0x00	; 0
+	}
+	else
+		return 1;	
+}
+
+int RingBufferDequeueArray(RingBuffer queue, unsigned char *array, int size){
+ 292:	b7 01       	movw	r22, r14
+ 294:	60 0f       	add	r22, r16
+ 296:	71 1f       	adc	r23, r17
+	int fillCount = RingBufferFillCount(queue);
+	if (fillCount >= size){
+		int i;		
+		for(i = 0; i < size; i++)
+			RingBufferDequeue(queue, &(array[i]));
+ 298:	c6 01       	movw	r24, r12
+ 29a:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+
+int RingBufferDequeueArray(RingBuffer queue, unsigned char *array, int size){
+	int fillCount = RingBufferFillCount(queue);
+	if (fillCount >= size){
+		int i;		
+		for(i = 0; i < size; i++)
+ 29e:	0f 5f       	subi	r16, 0xFF	; 255
+ 2a0:	1f 4f       	sbci	r17, 0xFF	; 255
+ 2a2:	0c 17       	cp	r16, r28
+ 2a4:	1d 07       	cpc	r17, r29
+ 2a6:	a9 f7       	brne	.-22     	; 0x292 <RingBufferDequeueArray+0x2a>
+			RingBufferDequeue(queue, &(array[i]));
+		return 0;
+ 2a8:	80 e0       	ldi	r24, 0x00	; 0
+ 2aa:	90 e0       	ldi	r25, 0x00	; 0
+ 2ac:	05 c0       	rjmp	.+10     	; 0x2b8 <RingBufferDequeueArray+0x50>
+	}
+	else
+		return 1;	
+ 2ae:	81 e0       	ldi	r24, 0x01	; 1
+ 2b0:	90 e0       	ldi	r25, 0x00	; 0
+ 2b2:	02 c0       	rjmp	.+4      	; 0x2b8 <RingBufferDequeueArray+0x50>
+	int fillCount = RingBufferFillCount(queue);
+	if (fillCount >= size){
+		int i;		
+		for(i = 0; i < size; i++)
+			RingBufferDequeue(queue, &(array[i]));
+		return 0;
+ 2b4:	80 e0       	ldi	r24, 0x00	; 0
+ 2b6:	90 e0       	ldi	r25, 0x00	; 0
+	}
+	else
+		return 1;	
+}		
+ 2b8:	df 91       	pop	r29
+ 2ba:	cf 91       	pop	r28
+ 2bc:	1f 91       	pop	r17
+ 2be:	0f 91       	pop	r16
+ 2c0:	ff 90       	pop	r15
+ 2c2:	ef 90       	pop	r14
+ 2c4:	df 90       	pop	r13
+ 2c6:	cf 90       	pop	r12
+ 2c8:	08 95       	ret
+
+000002ca <RingBufferMultDelete>:
+	}
+	else
+		return 1;	
+}
+
+int RingBufferMultDelete(RingBuffer queue, int numToDelete){
+ 2ca:	0f 93       	push	r16
+ 2cc:	1f 93       	push	r17
+ 2ce:	cf 93       	push	r28
+ 2d0:	df 93       	push	r29
+ 2d2:	ec 01       	movw	r28, r24
+ 2d4:	8b 01       	movw	r16, r22
+	int fillCount = RingBufferFillCount(queue);
+ 2d6:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <RingBufferFillCount>
+	if (fillCount >= numToDelete){
+ 2da:	80 17       	cp	r24, r16
+ 2dc:	91 07       	cpc	r25, r17
+ 2de:	34 f0       	brlt	.+12     	; 0x2ec <RingBufferMultDelete+0x22>
+		queue->readPointer += numToDelete;
+ 2e0:	89 81       	ldd	r24, Y+1	; 0x01
+ 2e2:	08 0f       	add	r16, r24
+ 2e4:	09 83       	std	Y+1, r16	; 0x01
+		queue->readPointer %= BUFFER_SIZE;
+		return 0;
+ 2e6:	80 e0       	ldi	r24, 0x00	; 0
+ 2e8:	90 e0       	ldi	r25, 0x00	; 0
+ 2ea:	02 c0       	rjmp	.+4      	; 0x2f0 <RingBufferMultDelete+0x26>
+	}		
+	else
+		return 1;
+ 2ec:	81 e0       	ldi	r24, 0x01	; 1
+ 2ee:	90 e0       	ldi	r25, 0x00	; 0
+}
+ 2f0:	df 91       	pop	r29
+ 2f2:	cf 91       	pop	r28
+ 2f4:	1f 91       	pop	r17
+ 2f6:	0f 91       	pop	r16
+ 2f8:	08 95       	ret
+
+000002fa <PanTilt>:
+}
+
+/**************************************************************************************************
+PanTilt - this is called by the main loop to increment the angles of the servos gradually
+**************************************************************************************************/
+void PanTilt(void){
+ 2fa:	cf 93       	push	r28
+ 2fc:	df 93       	push	r29
+ 2fe:	00 d0       	rcall	.+0      	; 0x300 <PanTilt+0x6>
+ 300:	00 d0       	rcall	.+0      	; 0x302 <PanTilt+0x8>
+ 302:	cd b7       	in	r28, 0x3d	; 61
+ 304:	de b7       	in	r29, 0x3e	; 62
+	int servo1Temp;
+	unsigned char servo2High;
+	unsigned char servo2Low;
+	int servo2Temp;
+	
+	RingBufferDequeue(commandBuffer, &servo1High); //the first 4 bytes are the servo offsets
+ 306:	80 91 04 01 	lds	r24, 0x0104
+ 30a:	90 91 05 01 	lds	r25, 0x0105
+ 30e:	be 01       	movw	r22, r28
+ 310:	6f 5f       	subi	r22, 0xFF	; 255
+ 312:	7f 4f       	sbci	r23, 0xFF	; 255
+ 314:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferDequeue(commandBuffer, &servo1Low);
+ 318:	80 91 04 01 	lds	r24, 0x0104
+ 31c:	90 91 05 01 	lds	r25, 0x0105
+ 320:	be 01       	movw	r22, r28
+ 322:	6e 5f       	subi	r22, 0xFE	; 254
+ 324:	7f 4f       	sbci	r23, 0xFF	; 255
+ 326:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferDequeue(commandBuffer, &servo2High);
+ 32a:	80 91 04 01 	lds	r24, 0x0104
+ 32e:	90 91 05 01 	lds	r25, 0x0105
+ 332:	be 01       	movw	r22, r28
+ 334:	6d 5f       	subi	r22, 0xFD	; 253
+ 336:	7f 4f       	sbci	r23, 0xFF	; 255
+ 338:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferDequeue(commandBuffer, &servo2Low);				
+ 33c:	80 91 04 01 	lds	r24, 0x0104
+ 340:	90 91 05 01 	lds	r25, 0x0105
+ 344:	be 01       	movw	r22, r28
+ 346:	6c 5f       	subi	r22, 0xFC	; 252
+ 348:	7f 4f       	sbci	r23, 0xFF	; 255
+ 34a:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferMultDelete(commandBuffer, 19); //the next 19 bytes are don't-cares ->throw them away
+ 34e:	80 91 04 01 	lds	r24, 0x0104
+ 352:	90 91 05 01 	lds	r25, 0x0105
+ 356:	63 e1       	ldi	r22, 0x13	; 19
+ 358:	70 e0       	ldi	r23, 0x00	; 0
+ 35a:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					
+	servo1Temp = ((servo1High << 8) | servo1Low); //concatenate the 2 bytes and set the new offset if in bounds
+	servo2Temp = ((servo2High << 8) | servo2Low);
+ 35e:	3b 81       	ldd	r19, Y+3	; 0x03
+ 360:	20 e0       	ldi	r18, 0x00	; 0
+ 362:	8c 81       	ldd	r24, Y+4	; 0x04
+ 364:	90 e0       	ldi	r25, 0x00	; 0
+ 366:	82 2b       	or	r24, r18
+ 368:	93 2b       	or	r25, r19
+	RingBufferDequeue(commandBuffer, &servo1Low);
+	RingBufferDequeue(commandBuffer, &servo2High);
+	RingBufferDequeue(commandBuffer, &servo2Low);				
+	RingBufferMultDelete(commandBuffer, 19); //the next 19 bytes are don't-cares ->throw them away
+					
+	servo1Temp = ((servo1High << 8) | servo1Low); //concatenate the 2 bytes and set the new offset if in bounds
+ 36a:	39 81       	ldd	r19, Y+1	; 0x01
+ 36c:	20 e0       	ldi	r18, 0x00	; 0
+ 36e:	4a 81       	ldd	r20, Y+2	; 0x02
+ 370:	50 e0       	ldi	r21, 0x00	; 0
+ 372:	24 2b       	or	r18, r20
+ 374:	35 2b       	or	r19, r21
+	servo2Temp = ((servo2High << 8) | servo2Low);
+	
+	if(servo1_offset + servo1Temp <= 2000 && servo1_offset + servo1Temp >= 0){
+ 376:	40 91 08 01 	lds	r20, 0x0108
+ 37a:	50 91 09 01 	lds	r21, 0x0109
+ 37e:	24 0f       	add	r18, r20
+ 380:	35 1f       	adc	r19, r21
+ 382:	47 e0       	ldi	r20, 0x07	; 7
+ 384:	21 3d       	cpi	r18, 0xD1	; 209
+ 386:	34 07       	cpc	r19, r20
+ 388:	68 f4       	brcc	.+26     	; 0x3a4 <PanTilt+0xaa>
+		servo1_offset += servo1Temp;
+ 38a:	30 93 09 01 	sts	0x0109, r19
+ 38e:	20 93 08 01 	sts	0x0108, r18
+		OCR0A = (1000 + servo1_offset)>>4; //set interrupt to trigger at servo offset
+ 392:	28 51       	subi	r18, 0x18	; 24
+ 394:	3c 4f       	sbci	r19, 0xFC	; 252
+ 396:	32 95       	swap	r19
+ 398:	22 95       	swap	r18
+ 39a:	2f 70       	andi	r18, 0x0F	; 15
+ 39c:	23 27       	eor	r18, r19
+ 39e:	3f 70       	andi	r19, 0x0F	; 15
+ 3a0:	23 27       	eor	r18, r19
+ 3a2:	27 bd       	out	0x27, r18	; 39
+	}		
+	if(servo2_offset + servo2Temp <= 2000 && servo2_offset + servo2Temp >= 0){
+ 3a4:	20 91 06 01 	lds	r18, 0x0106
+ 3a8:	30 91 07 01 	lds	r19, 0x0107
+ 3ac:	82 0f       	add	r24, r18
+ 3ae:	93 1f       	adc	r25, r19
+ 3b0:	27 e0       	ldi	r18, 0x07	; 7
+ 3b2:	81 3d       	cpi	r24, 0xD1	; 209
+ 3b4:	92 07       	cpc	r25, r18
+ 3b6:	68 f4       	brcc	.+26     	; 0x3d2 <PanTilt+0xd8>
+		servo2_offset += servo2Temp;
+ 3b8:	90 93 07 01 	sts	0x0107, r25
+ 3bc:	80 93 06 01 	sts	0x0106, r24
+		OCR0B = (1000 + servo2_offset)>>4; //set the interrupt to the offset every time in case it changes
+ 3c0:	88 51       	subi	r24, 0x18	; 24
+ 3c2:	9c 4f       	sbci	r25, 0xFC	; 252
+ 3c4:	92 95       	swap	r25
+ 3c6:	82 95       	swap	r24
+ 3c8:	8f 70       	andi	r24, 0x0F	; 15
+ 3ca:	89 27       	eor	r24, r25
+ 3cc:	9f 70       	andi	r25, 0x0F	; 15
+ 3ce:	89 27       	eor	r24, r25
+ 3d0:	88 bd       	out	0x28, r24	; 40
+	}							
+}
+ 3d2:	0f 90       	pop	r0
+ 3d4:	0f 90       	pop	r0
+ 3d6:	0f 90       	pop	r0
+ 3d8:	0f 90       	pop	r0
+ 3da:	df 91       	pop	r29
+ 3dc:	cf 91       	pop	r28
+ 3de:	08 95       	ret
+
+000003e0 <RingBufferEnqueue>:
+
+int RingBufferEnqueue(RingBuffer queue, unsigned char data){
+ 3e0:	1f 93       	push	r17
+ 3e2:	cf 93       	push	r28
+ 3e4:	df 93       	push	r29
+ 3e6:	ec 01       	movw	r28, r24
+ 3e8:	16 2f       	mov	r17, r22
+	if (!RingBufferIsFull(queue)){
+ 3ea:	0e 94 c0 00 	call	0x180	; 0x180 <RingBufferIsFull>
+ 3ee:	00 97       	sbiw	r24, 0x00	; 0
+ 3f0:	51 f4       	brne	.+20     	; 0x406 <RingBufferEnqueue+0x26>
+		queue->data[queue->writePointer] = data;
+ 3f2:	88 81       	ld	r24, Y
+ 3f4:	fe 01       	movw	r30, r28
+ 3f6:	e8 0f       	add	r30, r24
+ 3f8:	f1 1d       	adc	r31, r1
+ 3fa:	13 83       	std	Z+3, r17	; 0x03
+		queue->writePointer++;
+ 3fc:	8f 5f       	subi	r24, 0xFF	; 255
+ 3fe:	88 83       	st	Y, r24
+		queue->writePointer %= BUFFER_SIZE;
+		return 0;
+ 400:	80 e0       	ldi	r24, 0x00	; 0
+ 402:	90 e0       	ldi	r25, 0x00	; 0
+ 404:	02 c0       	rjmp	.+4      	; 0x40a <RingBufferEnqueue+0x2a>
+	}
+	else
+		return 1;
+ 406:	81 e0       	ldi	r24, 0x01	; 1
+ 408:	90 e0       	ldi	r25, 0x00	; 0
+}
+ 40a:	df 91       	pop	r29
+ 40c:	cf 91       	pop	r28
+ 40e:	1f 91       	pop	r17
+ 410:	08 95       	ret
+
+00000412 <RingBufferEnqueueArray>:
+
+int RingBufferEnqueueArray(RingBuffer queue, unsigned char *array, int size){
+ 412:	cf 92       	push	r12
+ 414:	df 92       	push	r13
+ 416:	ef 92       	push	r14
+ 418:	ff 92       	push	r15
+ 41a:	0f 93       	push	r16
+ 41c:	1f 93       	push	r17
+ 41e:	cf 93       	push	r28
+ 420:	df 93       	push	r29
+ 422:	6c 01       	movw	r12, r24
+ 424:	06 2f       	mov	r16, r22
+ 426:	17 2f       	mov	r17, r23
+ 428:	ea 01       	movw	r28, r20
+	if (RingBufferHasRoom(queue, size)){
+ 42a:	ba 01       	movw	r22, r20
+ 42c:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <RingBufferHasRoom>
+ 430:	00 97       	sbiw	r24, 0x00	; 0
+ 432:	a9 f0       	breq	.+42     	; 0x45e <RingBufferEnqueueArray+0x4c>
+		int i;		
+		for(i = 0; i < size; i++)
+ 434:	1c 16       	cp	r1, r28
+ 436:	1d 06       	cpc	r1, r29
+ 438:	ac f4       	brge	.+42     	; 0x464 <RingBufferEnqueueArray+0x52>
+ 43a:	e0 2e       	mov	r14, r16
+ 43c:	f1 2e       	mov	r15, r17
+ 43e:	00 e0       	ldi	r16, 0x00	; 0
+ 440:	10 e0       	ldi	r17, 0x00	; 0
+			RingBufferEnqueue(queue, array[i]);
+ 442:	f7 01       	movw	r30, r14
+ 444:	61 91       	ld	r22, Z+
+ 446:	7f 01       	movw	r14, r30
+ 448:	c6 01       	movw	r24, r12
+ 44a:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+}
+
+int RingBufferEnqueueArray(RingBuffer queue, unsigned char *array, int size){
+	if (RingBufferHasRoom(queue, size)){
+		int i;		
+		for(i = 0; i < size; i++)
+ 44e:	0f 5f       	subi	r16, 0xFF	; 255
+ 450:	1f 4f       	sbci	r17, 0xFF	; 255
+ 452:	0c 17       	cp	r16, r28
+ 454:	1d 07       	cpc	r17, r29
+ 456:	a9 f7       	brne	.-22     	; 0x442 <RingBufferEnqueueArray+0x30>
+			RingBufferEnqueue(queue, array[i]);
+		return 0;
+ 458:	80 e0       	ldi	r24, 0x00	; 0
+ 45a:	90 e0       	ldi	r25, 0x00	; 0
+ 45c:	05 c0       	rjmp	.+10     	; 0x468 <RingBufferEnqueueArray+0x56>
+	}
+	else
+		return 1;	
+ 45e:	81 e0       	ldi	r24, 0x01	; 1
+ 460:	90 e0       	ldi	r25, 0x00	; 0
+ 462:	02 c0       	rjmp	.+4      	; 0x468 <RingBufferEnqueueArray+0x56>
+int RingBufferEnqueueArray(RingBuffer queue, unsigned char *array, int size){
+	if (RingBufferHasRoom(queue, size)){
+		int i;		
+		for(i = 0; i < size; i++)
+			RingBufferEnqueue(queue, array[i]);
+		return 0;
+ 464:	80 e0       	ldi	r24, 0x00	; 0
+ 466:	90 e0       	ldi	r25, 0x00	; 0
+	}
+	else
+		return 1;	
+}
+ 468:	df 91       	pop	r29
+ 46a:	cf 91       	pop	r28
+ 46c:	1f 91       	pop	r17
+ 46e:	0f 91       	pop	r16
+ 470:	ff 90       	pop	r15
+ 472:	ef 90       	pop	r14
+ 474:	df 90       	pop	r13
+ 476:	cf 90       	pop	r12
+ 478:	08 95       	ret
+
+0000047a <__vector_11>:
+predetermined value (stored in 'OCR1A').  This vector is responsible for starting a new pulse on
+both servos every 20ms (when the timer reaches 40000). OCR1A is the set to the offset of servo1 
++ 2000. When timer 1 reaches that offset (stored in 'servo1_offset'), this vector brings servo 1's
+pulse low and waits for the timer to reach 40000 again so it can set both servo pulses high.
+**************************************************************************************************/
+ISR(TIMER1_COMPA_vect) {
+ 47a:	1f 92       	push	r1
+ 47c:	0f 92       	push	r0
+ 47e:	0f b6       	in	r0, 0x3f	; 63
+ 480:	0f 92       	push	r0
+ 482:	11 24       	eor	r1, r1
+ 484:	8f 93       	push	r24
+	TCNT0 = 0;
+ 486:	16 bc       	out	0x26, r1	; 38
+	PORTD |= 0b01100000;
+ 488:	8b b1       	in	r24, 0x0b	; 11
+ 48a:	80 66       	ori	r24, 0x60	; 96
+ 48c:	8b b9       	out	0x0b, r24	; 11
+	
+}
+ 48e:	8f 91       	pop	r24
+ 490:	0f 90       	pop	r0
+ 492:	0f be       	out	0x3f, r0	; 63
+ 494:	0f 90       	pop	r0
+ 496:	1f 90       	pop	r1
+ 498:	18 95       	reti
+
+0000049a <HandleMiddleBytes>:
+then sent out. After byte 23 the checksum for outgoing data is calculated using the status header 
+sent in byte 1 and loaded into 'SPDR' for transmission as byte 24.
+**************************************************************************************************/
+void HandleMiddleBytes(void) {
+	//depends on what we were last doing as stored in 'spiState'
+	switch (spiState) {
+ 49a:	80 91 40 01 	lds	r24, 0x0140
+ 49e:	90 91 41 01 	lds	r25, 0x0141
+ 4a2:	81 30       	cpi	r24, 0x01	; 1
+ 4a4:	91 05       	cpc	r25, r1
+ 4a6:	31 f1       	breq	.+76     	; 0x4f4 <HandleMiddleBytes+0x5a>
+ 4a8:	82 30       	cpi	r24, 0x02	; 2
+ 4aa:	91 05       	cpc	r25, r1
+ 4ac:	19 f0       	breq	.+6      	; 0x4b4 <HandleMiddleBytes+0x1a>
+ 4ae:	00 97       	sbiw	r24, 0x00	; 0
+ 4b0:	89 f1       	breq	.+98     	; 0x514 <HandleMiddleBytes+0x7a>
+ 4b2:	44 c0       	rjmp	.+136    	; 0x53c <HandleMiddleBytes+0xa2>
+		case SEND_RECEIVE:
+			incomingCommand[ci] = SPDR; //load SPDR into the array
+ 4b4:	2e b5       	in	r18, 0x2e	; 46
+ 4b6:	80 91 0e 01 	lds	r24, 0x010E
+ 4ba:	90 91 0f 01 	lds	r25, 0x010F
+ 4be:	fc 01       	movw	r30, r24
+ 4c0:	e0 5f       	subi	r30, 0xF0	; 240
+ 4c2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 4c4:	20 83       	st	Z, r18
+			checksumResult ^= SPDR; //calculate running checksum as we go		
+ 4c6:	2e b5       	in	r18, 0x2e	; 46
+ 4c8:	30 91 0d 01 	lds	r19, 0x010D
+ 4cc:	23 27       	eor	r18, r19
+ 4ce:	20 93 0d 01 	sts	0x010D, r18
+			SPDR = outgoingData[oi];
+ 4d2:	e0 91 00 01 	lds	r30, 0x0100
+ 4d6:	f0 91 01 01 	lds	r31, 0x0101
+ 4da:	e8 5d       	subi	r30, 0xD8	; 216
+ 4dc:	fe 4f       	sbci	r31, 0xFE	; 254
+ 4de:	20 81       	ld	r18, Z
+ 4e0:	2e bd       	out	0x2e, r18	; 46
+			if(ci == 23) //if we're about to load the checksum
+ 4e2:	87 31       	cpi	r24, 0x17	; 23
+ 4e4:	91 05       	cpc	r25, r1
+ 4e6:	51 f5       	brne	.+84     	; 0x53c <HandleMiddleBytes+0xa2>
+				SPDR ^= status; //XOR the final status in to calculate the final checksum
+ 4e8:	9e b5       	in	r25, 0x2e	; 46
+ 4ea:	80 91 0c 01 	lds	r24, 0x010C
+ 4ee:	89 27       	eor	r24, r25
+ 4f0:	8e bd       	out	0x2e, r24	; 46
+ 4f2:	24 c0       	rjmp	.+72     	; 0x53c <HandleMiddleBytes+0xa2>
+			break;
+		case RECEIVE:
+			incomingCommand[ci] = SPDR; //load SPDR into the array
+ 4f4:	8e b5       	in	r24, 0x2e	; 46
+ 4f6:	e0 91 0e 01 	lds	r30, 0x010E
+ 4fa:	f0 91 0f 01 	lds	r31, 0x010F
+ 4fe:	e0 5f       	subi	r30, 0xF0	; 240
+ 500:	fe 4f       	sbci	r31, 0xFE	; 254
+ 502:	80 83       	st	Z, r24
+			checksumResult ^= SPDR; //calculate checksum on the fly
+ 504:	8e b5       	in	r24, 0x2e	; 46
+ 506:	90 91 0d 01 	lds	r25, 0x010D
+ 50a:	89 27       	eor	r24, r25
+ 50c:	80 93 0d 01 	sts	0x010D, r24
+			SPDR = 0; //clear the SPDR
+ 510:	1e bc       	out	0x2e, r1	; 46
+			break;
+ 512:	14 c0       	rjmp	.+40     	; 0x53c <HandleMiddleBytes+0xa2>
+		case SEND:
+			SPDR = outgoingData[oi];
+ 514:	e0 91 00 01 	lds	r30, 0x0100
+ 518:	f0 91 01 01 	lds	r31, 0x0101
+ 51c:	e8 5d       	subi	r30, 0xD8	; 216
+ 51e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 520:	80 81       	ld	r24, Z
+ 522:	8e bd       	out	0x2e, r24	; 46
+			if(ci == 23) //if we're about to load the checksum
+ 524:	80 91 0e 01 	lds	r24, 0x010E
+ 528:	90 91 0f 01 	lds	r25, 0x010F
+ 52c:	87 31       	cpi	r24, 0x17	; 23
+ 52e:	91 05       	cpc	r25, r1
+ 530:	29 f4       	brne	.+10     	; 0x53c <HandleMiddleBytes+0xa2>
+				SPDR ^= status; //XOR the final status in to calculate the final checksum
+ 532:	9e b5       	in	r25, 0x2e	; 46
+ 534:	80 91 0c 01 	lds	r24, 0x010C
+ 538:	89 27       	eor	r24, r25
+ 53a:	8e bd       	out	0x2e, r24	; 46
+			break;
+		default: //unreachable
+			//FlashErrorLight(4); //turn on error light
+			;
+	}
+	ci++; //move on to next byte
+ 53c:	80 91 0e 01 	lds	r24, 0x010E
+ 540:	90 91 0f 01 	lds	r25, 0x010F
+ 544:	01 96       	adiw	r24, 0x01	; 1
+ 546:	90 93 0f 01 	sts	0x010F, r25
+ 54a:	80 93 0e 01 	sts	0x010E, r24
+	oi++;
+ 54e:	80 91 00 01 	lds	r24, 0x0100
+ 552:	90 91 01 01 	lds	r25, 0x0101
+ 556:	01 96       	adiw	r24, 0x01	; 1
+ 558:	90 93 01 01 	sts	0x0101, r25
+ 55c:	80 93 00 01 	sts	0x0100, r24
+}
+ 560:	08 95       	ret
+
+00000562 <CalculateStatus>:
+
+/**************************************************************************************************
+CalculateStatus - looks at the current state of com protocol to see if there is data to send, if
+the command buffer is full, it appends the header from the output buffer to it and returns it
+**************************************************************************************************/
+unsigned char CalculateStatus(void){
+ 562:	0f 93       	push	r16
+ 564:	1f 93       	push	r17
+ 566:	cf 93       	push	r28
+ 568:	df 93       	push	r29
+ 56a:	0f 92       	push	r0
+ 56c:	cd b7       	in	r28, 0x3d	; 61
+ 56e:	de b7       	in	r29, 0x3e	; 62
+	unsigned char newStatus = 0;
+ 570:	19 82       	std	Y+1, r1	; 0x01
+	if (RingBufferFillCount(outputBuffer) >= PACKET_SIZE) {
+ 572:	00 91 02 01 	lds	r16, 0x0102
+ 576:	10 91 03 01 	lds	r17, 0x0103
+ 57a:	c8 01       	movw	r24, r16
+ 57c:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <RingBufferFillCount>
+ 580:	88 31       	cpi	r24, 0x18	; 24
+ 582:	91 05       	cpc	r25, r1
+ 584:	54 f0       	brlt	.+20     	; 0x59a <CalculateStatus+0x38>
+		RingBufferPeek(outputBuffer, &newStatus); //copy the header out, but leave it in the buffer
+ 586:	c8 01       	movw	r24, r16
+ 588:	be 01       	movw	r22, r28
+ 58a:	6f 5f       	subi	r22, 0xFF	; 255
+ 58c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 58e:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <RingBufferPeek>
+		newStatus &= DEVICE; //we only want the device ID of the header
+ 592:	89 81       	ldd	r24, Y+1	; 0x01
+ 594:	80 7f       	andi	r24, 0xF0	; 240
+		newStatus |= DATA_READY;
+ 596:	82 60       	ori	r24, 0x02	; 2
+ 598:	89 83       	std	Y+1, r24	; 0x01
+	}
+	if (!RingBufferHasRoom(commandBuffer, PACKET_SIZE)) {
+ 59a:	80 91 04 01 	lds	r24, 0x0104
+ 59e:	90 91 05 01 	lds	r25, 0x0105
+ 5a2:	68 e1       	ldi	r22, 0x18	; 24
+ 5a4:	70 e0       	ldi	r23, 0x00	; 0
+ 5a6:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <RingBufferHasRoom>
+ 5aa:	00 97       	sbiw	r24, 0x00	; 0
+ 5ac:	19 f4       	brne	.+6      	; 0x5b4 <CalculateStatus+0x52>
+		newStatus |= BUFR_FULL;
+ 5ae:	89 81       	ldd	r24, Y+1	; 0x01
+ 5b0:	84 60       	ori	r24, 0x04	; 4
+ 5b2:	89 83       	std	Y+1, r24	; 0x01
+	}
+	
+	return newStatus;
+}
+ 5b4:	89 81       	ldd	r24, Y+1	; 0x01
+ 5b6:	0f 90       	pop	r0
+ 5b8:	df 91       	pop	r29
+ 5ba:	cf 91       	pop	r28
+ 5bc:	1f 91       	pop	r17
+ 5be:	0f 91       	pop	r16
+ 5c0:	08 95       	ret
+
+000005c2 <HandleLastByte>:
+the buffer. If the checksum fails, it discards the received data and sets the error flag in the 
+status header of the next transmission.  It also gets the current state of the machine (data 
+ready?, buffer full?, device address?) and creates the status header for the next transmission.
+**************************************************************************************************/
+void HandleLastByte(void){
+	status = 0; //clear status for this past transmission
+ 5c2:	10 92 0c 01 	sts	0x010C, r1
+	
+	//if we received a command verify the checksum and add it to the command buffer
+	if ((spiState == SEND_RECEIVE) || (spiState == RECEIVE)) {
+ 5c6:	80 91 40 01 	lds	r24, 0x0140
+ 5ca:	90 91 41 01 	lds	r25, 0x0141
+ 5ce:	01 97       	sbiw	r24, 0x01	; 1
+ 5d0:	82 30       	cpi	r24, 0x02	; 2
+ 5d2:	91 05       	cpc	r25, r1
+ 5d4:	f0 f4       	brcc	.+60     	; 0x612 <HandleLastByte+0x50>
+		incomingCommand[ci] = SPDR; //load SPDR into the array
+ 5d6:	8e b5       	in	r24, 0x2e	; 46
+ 5d8:	e0 91 0e 01 	lds	r30, 0x010E
+ 5dc:	f0 91 0f 01 	lds	r31, 0x010F
+ 5e0:	e0 5f       	subi	r30, 0xF0	; 240
+ 5e2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 5e4:	80 83       	st	Z, r24
+		checksumResult ^= SPDR; //calculate checksum on the fly
+ 5e6:	9e b5       	in	r25, 0x2e	; 46
+ 5e8:	80 91 0d 01 	lds	r24, 0x010D
+ 5ec:	89 27       	eor	r24, r25
+ 5ee:	80 93 0d 01 	sts	0x010D, r24
+		
+		if (checksumResult == 0) //if result is 0, no error - add newly received command to buffer
+ 5f2:	88 23       	and	r24, r24
+ 5f4:	59 f4       	brne	.+22     	; 0x60c <HandleLastByte+0x4a>
+			RingBufferEnqueueArray(commandBuffer, incomingCommand, PACKET_SIZE);
+ 5f6:	80 91 04 01 	lds	r24, 0x0104
+ 5fa:	90 91 05 01 	lds	r25, 0x0105
+ 5fe:	60 e1       	ldi	r22, 0x10	; 16
+ 600:	71 e0       	ldi	r23, 0x01	; 1
+ 602:	48 e1       	ldi	r20, 0x18	; 24
+ 604:	50 e0       	ldi	r21, 0x00	; 0
+ 606:	0e 94 09 02 	call	0x412	; 0x412 <RingBufferEnqueueArray>
+ 60a:	03 c0       	rjmp	.+6      	; 0x612 <HandleLastByte+0x50>
+		else //else set the error flag so the master can resend
+			status |= ERROR;
+ 60c:	88 e0       	ldi	r24, 0x08	; 8
+ 60e:	80 93 0c 01 	sts	0x010C, r24
+	}
+	
+	//check status, load SPDR with status header for when the next command comes
+	status |= CalculateStatus();		
+ 612:	0e 94 b1 02 	call	0x562	; 0x562 <CalculateStatus>
+ 616:	90 91 0c 01 	lds	r25, 0x010C
+ 61a:	89 2b       	or	r24, r25
+ 61c:	80 93 0c 01 	sts	0x010C, r24
+	SPDR = status;
+ 620:	8e bd       	out	0x2e, r24	; 46
+	ci = 0; //move on to first byte	of next command
+ 622:	10 92 0f 01 	sts	0x010F, r1
+ 626:	10 92 0e 01 	sts	0x010E, r1
+	oi = 1;
+ 62a:	81 e0       	ldi	r24, 0x01	; 1
+ 62c:	90 e0       	ldi	r25, 0x00	; 0
+ 62e:	90 93 01 01 	sts	0x0101, r25
+ 632:	80 93 00 01 	sts	0x0100, r24
+}
+ 636:	08 95       	ret
+
+00000638 <HandleFirstByte>:
+/**************************************************************************************************
+HandleFirstByte - this mess of code is called by the SPI Interrupt vector to figure out what to do
+with the first byte (the header) of each transmission. One thing to remember is that once we've
+gotten here, the first byte of data (status header) has already been sent.
+**************************************************************************************************/
+void HandleFirstByte(void) {	
+ 638:	cf 93       	push	r28
+ 63a:	df 93       	push	r29
+	checksumResult = 0; //reset checksum result
+ 63c:	10 92 0d 01 	sts	0x010D, r1
+	unsigned char input = status & (BUFR_STATE | DATA_STATE); 
+ 640:	80 91 0c 01 	lds	r24, 0x010C
+
+	//if there was an error on data sent, the master must know to start the transmission over again and discard the 
+	//header it received.  since that header was peeked out of the buffer it is not lost, and will be resent upon 
+	//successful transmission of the previous packet.
+	if ((SPDR & ERR_STATE) == ERROR){ //if the master reports an error
+ 644:	0e b4       	in	r0, 0x2e	; 46
+ 646:	03 fe       	sbrs	r0, 3
+ 648:	39 c0       	rjmp	.+114    	; 0x6bc <HandleFirstByte+0x84>
+		if ((spiState == SEND_RECEIVE) || (spiState == SEND)){   //there was an error in the data we sent out
+ 64a:	80 91 40 01 	lds	r24, 0x0140
+ 64e:	90 91 41 01 	lds	r25, 0x0141
+ 652:	82 30       	cpi	r24, 0x02	; 2
+ 654:	91 05       	cpc	r25, r1
+ 656:	11 f0       	breq	.+4      	; 0x65c <HandleFirstByte+0x24>
+ 658:	00 97       	sbiw	r24, 0x00	; 0
+ 65a:	01 f5       	brne	.+64     	; 0x69c <HandleFirstByte+0x64>
+			status = outgoingData[0]; //get the previous header back out		
+			status |= DATA_READY; //recalculate the status
+ 65c:	c0 91 28 01 	lds	r28, 0x0128
+ 660:	c2 60       	ori	r28, 0x02	; 2
+ 662:	c0 93 0c 01 	sts	0x010C, r28
+			if(!RingBufferHasRoom(commandBuffer, PACKET_SIZE)){
+ 666:	80 91 04 01 	lds	r24, 0x0104
+ 66a:	90 91 05 01 	lds	r25, 0x0105
+ 66e:	68 e1       	ldi	r22, 0x18	; 24
+ 670:	70 e0       	ldi	r23, 0x00	; 0
+ 672:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <RingBufferHasRoom>
+ 676:	00 97       	sbiw	r24, 0x00	; 0
+ 678:	19 f4       	brne	.+6      	; 0x680 <HandleFirstByte+0x48>
+				status |= BUFR_FULL;
+ 67a:	c4 60       	ori	r28, 0x04	; 4
+ 67c:	c0 93 0c 01 	sts	0x010C, r28
+			}
+			SPDR = status; //the header will be resent next time
+ 680:	80 91 0c 01 	lds	r24, 0x010C
+ 684:	8e bd       	out	0x2e, r24	; 46
+			oi = 1;
+ 686:	81 e0       	ldi	r24, 0x01	; 1
+ 688:	90 e0       	ldi	r25, 0x00	; 0
+ 68a:	90 93 01 01 	sts	0x0101, r25
+ 68e:	80 93 00 01 	sts	0x0100, r24
+			ci = 0;
+ 692:	10 92 0f 01 	sts	0x010F, r1
+ 696:	10 92 0e 01 	sts	0x010E, r1
+ 69a:	bf c0       	rjmp	.+382    	; 0x81a <HandleFirstByte+0x1e2>
+		}
+		else{ //some other error - reset the Com Protocol
+			oi = 1;
+ 69c:	81 e0       	ldi	r24, 0x01	; 1
+ 69e:	90 e0       	ldi	r25, 0x00	; 0
+ 6a0:	90 93 01 01 	sts	0x0101, r25
+ 6a4:	80 93 00 01 	sts	0x0100, r24
+			ci = 0;
+ 6a8:	10 92 0f 01 	sts	0x010F, r1
+ 6ac:	10 92 0e 01 	sts	0x010E, r1
+			status = CalculateStatus();
+ 6b0:	0e 94 b1 02 	call	0x562	; 0x562 <CalculateStatus>
+ 6b4:	80 93 0c 01 	sts	0x010C, r24
+			SPDR = status;
+ 6b8:	8e bd       	out	0x2e, r24	; 46
+ 6ba:	af c0       	rjmp	.+350    	; 0x81a <HandleFirstByte+0x1e2>
+	}
+	//if the slave (us) reported an error at the end of the last transmission the master will know to resend the
+	//command over again.  this means it will abort the transmission it just started and start over again.  Here
+	//we discard the header we received since it was part of the aborted transmission.  then we reset the com
+	//protocol to wait for the old header to be sent again.
+	else if ((status & ERR_STATE) == ERROR){
+ 6bc:	83 ff       	sbrs	r24, 3
+ 6be:	10 c0       	rjmp	.+32     	; 0x6e0 <HandleFirstByte+0xa8>
+		status = CalculateStatus();
+ 6c0:	0e 94 b1 02 	call	0x562	; 0x562 <CalculateStatus>
+ 6c4:	80 93 0c 01 	sts	0x010C, r24
+		SPDR = status;
+ 6c8:	8e bd       	out	0x2e, r24	; 46
+		oi = 1;
+ 6ca:	81 e0       	ldi	r24, 0x01	; 1
+ 6cc:	90 e0       	ldi	r25, 0x00	; 0
+ 6ce:	90 93 01 01 	sts	0x0101, r25
+ 6d2:	80 93 00 01 	sts	0x0100, r24
+		ci = 0;
+ 6d6:	10 92 0f 01 	sts	0x010F, r1
+ 6da:	10 92 0e 01 	sts	0x010E, r1
+ 6de:	9d c0       	rjmp	.+314    	; 0x81a <HandleFirstByte+0x1e2>
+with the first byte (the header) of each transmission. One thing to remember is that once we've
+gotten here, the first byte of data (status header) has already been sent.
+**************************************************************************************************/
+void HandleFirstByte(void) {	
+	checksumResult = 0; //reset checksum result
+	unsigned char input = status & (BUFR_STATE | DATA_STATE); 
+ 6e0:	86 70       	andi	r24, 0x06	; 6
+		ci = 0;
+	}
+	//if there was no error and there is data to send, dequeue all 24 bytes of data into 'outgoingData'.  
+	//This takes care of the header that was only peeked at.  start the index oi at 1, because the header was already sent.
+	//continue transmission as normal
+	else if ((SPDR & DEVICE) == NO_OP) { //header received is a NO_OP		
+ 6e2:	9e b5       	in	r25, 0x2e	; 46
+ 6e4:	90 7f       	andi	r25, 0xF0	; 240
+ 6e6:	c9 f5       	brne	.+114    	; 0x75a <HandleFirstByte+0x122>
+		switch (input) {
+ 6e8:	82 30       	cpi	r24, 0x02	; 2
+ 6ea:	51 f0       	breq	.+20     	; 0x700 <HandleFirstByte+0xc8>
+ 6ec:	83 30       	cpi	r24, 0x03	; 3
+ 6ee:	18 f4       	brcc	.+6      	; 0x6f6 <HandleFirstByte+0xbe>
+ 6f0:	88 23       	and	r24, r24
+ 6f2:	69 f1       	breq	.+90     	; 0x74e <HandleFirstByte+0x116>
+ 6f4:	92 c0       	rjmp	.+292    	; 0x81a <HandleFirstByte+0x1e2>
+ 6f6:	84 30       	cpi	r24, 0x04	; 4
+ 6f8:	51 f1       	breq	.+84     	; 0x74e <HandleFirstByte+0x116>
+ 6fa:	86 30       	cpi	r24, 0x06	; 6
+ 6fc:	09 f0       	breq	.+2      	; 0x700 <HandleFirstByte+0xc8>
+ 6fe:	8d c0       	rjmp	.+282    	; 0x81a <HandleFirstByte+0x1e2>
+			case (BUFR_READY | DATA_READY):
+			case (BUFR_FULL | DATA_READY):	
+				RingBufferDequeueArray(outputBuffer, outgoingData, PACKET_SIZE);
+ 700:	c8 e2       	ldi	r28, 0x28	; 40
+ 702:	d1 e0       	ldi	r29, 0x01	; 1
+ 704:	80 91 02 01 	lds	r24, 0x0102
+ 708:	90 91 03 01 	lds	r25, 0x0103
+ 70c:	be 01       	movw	r22, r28
+ 70e:	48 e1       	ldi	r20, 0x18	; 24
+ 710:	50 e0       	ldi	r21, 0x00	; 0
+ 712:	0e 94 34 01 	call	0x268	; 0x268 <RingBufferDequeueArray>
+				SPDR = outgoingData[oi];
+ 716:	80 91 00 01 	lds	r24, 0x0100
+ 71a:	90 91 01 01 	lds	r25, 0x0101
+ 71e:	c8 0f       	add	r28, r24
+ 720:	d9 1f       	adc	r29, r25
+ 722:	28 81       	ld	r18, Y
+ 724:	2e bd       	out	0x2e, r18	; 46
+				ci++;
+ 726:	20 91 0e 01 	lds	r18, 0x010E
+ 72a:	30 91 0f 01 	lds	r19, 0x010F
+ 72e:	2f 5f       	subi	r18, 0xFF	; 255
+ 730:	3f 4f       	sbci	r19, 0xFF	; 255
+ 732:	30 93 0f 01 	sts	0x010F, r19
+ 736:	20 93 0e 01 	sts	0x010E, r18
+				oi++;
+ 73a:	01 96       	adiw	r24, 0x01	; 1
+ 73c:	90 93 01 01 	sts	0x0101, r25
+ 740:	80 93 00 01 	sts	0x0100, r24
+				spiState = SEND;				
+ 744:	10 92 41 01 	sts	0x0141, r1
+ 748:	10 92 40 01 	sts	0x0140, r1
+				break;
+ 74c:	66 c0       	rjmp	.+204    	; 0x81a <HandleFirstByte+0x1e2>
+			case (BUFR_FULL | DATA_EMPTY):
+			case (BUFR_READY | DATA_EMPTY): //recalculate status for next time
+				status = CalculateStatus();
+ 74e:	0e 94 b1 02 	call	0x562	; 0x562 <CalculateStatus>
+ 752:	80 93 0c 01 	sts	0x010C, r24
+				SPDR = status;
+ 756:	8e bd       	out	0x2e, r24	; 46
+				break;
+ 758:	60 c0       	rjmp	.+192    	; 0x81a <HandleFirstByte+0x1e2>
+				//FlashErrorLight(2); //turn on error light
+				;	
+		}
+	}
+	else { //header received is any other command
+		switch (input) {
+ 75a:	82 30       	cpi	r24, 0x02	; 2
+ 75c:	61 f0       	breq	.+24     	; 0x776 <HandleFirstByte+0x13e>
+ 75e:	83 30       	cpi	r24, 0x03	; 3
+ 760:	18 f4       	brcc	.+6      	; 0x768 <HandleFirstByte+0x130>
+ 762:	88 23       	and	r24, r24
+ 764:	e1 f1       	breq	.+120    	; 0x7de <HandleFirstByte+0x1a6>
+ 766:	59 c0       	rjmp	.+178    	; 0x81a <HandleFirstByte+0x1e2>
+ 768:	84 30       	cpi	r24, 0x04	; 4
+ 76a:	09 f4       	brne	.+2      	; 0x76e <HandleFirstByte+0x136>
+ 76c:	51 c0       	rjmp	.+162    	; 0x810 <HandleFirstByte+0x1d8>
+ 76e:	86 30       	cpi	r24, 0x06	; 6
+ 770:	09 f0       	breq	.+2      	; 0x774 <HandleFirstByte+0x13c>
+ 772:	53 c0       	rjmp	.+166    	; 0x81a <HandleFirstByte+0x1e2>
+ 774:	4d c0       	rjmp	.+154    	; 0x810 <HandleFirstByte+0x1d8>
+			case (BUFR_READY | DATA_READY):
+				incomingCommand[ci] = SPDR; //put it in a temp array
+ 776:	8e b5       	in	r24, 0x2e	; 46
+ 778:	e0 91 0e 01 	lds	r30, 0x010E
+ 77c:	f0 91 0f 01 	lds	r31, 0x010F
+ 780:	e0 5f       	subi	r30, 0xF0	; 240
+ 782:	fe 4f       	sbci	r31, 0xFE	; 254
+ 784:	80 83       	st	Z, r24
+				checksumResult ^= SPDR; //calculate checksum on the fly			
+ 786:	8e b5       	in	r24, 0x2e	; 46
+ 788:	80 93 0d 01 	sts	0x010D, r24
+				RingBufferDequeueArray(outputBuffer, outgoingData, PACKET_SIZE);
+ 78c:	c8 e2       	ldi	r28, 0x28	; 40
+ 78e:	d1 e0       	ldi	r29, 0x01	; 1
+ 790:	80 91 02 01 	lds	r24, 0x0102
+ 794:	90 91 03 01 	lds	r25, 0x0103
+ 798:	be 01       	movw	r22, r28
+ 79a:	48 e1       	ldi	r20, 0x18	; 24
+ 79c:	50 e0       	ldi	r21, 0x00	; 0
+ 79e:	0e 94 34 01 	call	0x268	; 0x268 <RingBufferDequeueArray>
+				SPDR = outgoingData[oi];
+ 7a2:	80 91 00 01 	lds	r24, 0x0100
+ 7a6:	90 91 01 01 	lds	r25, 0x0101
+ 7aa:	c8 0f       	add	r28, r24
+ 7ac:	d9 1f       	adc	r29, r25
+ 7ae:	28 81       	ld	r18, Y
+ 7b0:	2e bd       	out	0x2e, r18	; 46
+				ci++;
+ 7b2:	20 91 0e 01 	lds	r18, 0x010E
+ 7b6:	30 91 0f 01 	lds	r19, 0x010F
+ 7ba:	2f 5f       	subi	r18, 0xFF	; 255
+ 7bc:	3f 4f       	sbci	r19, 0xFF	; 255
+ 7be:	30 93 0f 01 	sts	0x010F, r19
+ 7c2:	20 93 0e 01 	sts	0x010E, r18
+				oi++;
+ 7c6:	01 96       	adiw	r24, 0x01	; 1
+ 7c8:	90 93 01 01 	sts	0x0101, r25
+ 7cc:	80 93 00 01 	sts	0x0100, r24
+				spiState = SEND_RECEIVE;
+ 7d0:	82 e0       	ldi	r24, 0x02	; 2
+ 7d2:	90 e0       	ldi	r25, 0x00	; 0
+ 7d4:	90 93 41 01 	sts	0x0141, r25
+ 7d8:	80 93 40 01 	sts	0x0140, r24
+				break;
+ 7dc:	1e c0       	rjmp	.+60     	; 0x81a <HandleFirstByte+0x1e2>
+			case (BUFR_READY | DATA_EMPTY):
+				incomingCommand[ci] = SPDR; //put it in a temp array
+ 7de:	2e b5       	in	r18, 0x2e	; 46
+ 7e0:	80 91 0e 01 	lds	r24, 0x010E
+ 7e4:	90 91 0f 01 	lds	r25, 0x010F
+ 7e8:	fc 01       	movw	r30, r24
+ 7ea:	e0 5f       	subi	r30, 0xF0	; 240
+ 7ec:	fe 4f       	sbci	r31, 0xFE	; 254
+ 7ee:	20 83       	st	Z, r18
+				checksumResult ^= SPDR; //calculate checksum on the fly
+ 7f0:	2e b5       	in	r18, 0x2e	; 46
+ 7f2:	20 93 0d 01 	sts	0x010D, r18
+				SPDR = 0; //clear the SPDR
+ 7f6:	1e bc       	out	0x2e, r1	; 46
+				ci++;
+ 7f8:	01 96       	adiw	r24, 0x01	; 1
+ 7fa:	90 93 0f 01 	sts	0x010F, r25
+ 7fe:	80 93 0e 01 	sts	0x010E, r24
+				spiState = RECEIVE;
+ 802:	81 e0       	ldi	r24, 0x01	; 1
+ 804:	90 e0       	ldi	r25, 0x00	; 0
+ 806:	90 93 41 01 	sts	0x0141, r25
+ 80a:	80 93 40 01 	sts	0x0140, r24
+				break;
+ 80e:	05 c0       	rjmp	.+10     	; 0x81a <HandleFirstByte+0x1e2>
+			case (BUFR_FULL | DATA_READY):
+			case (BUFR_FULL | DATA_EMPTY):
+				status = CalculateStatus();	
+ 810:	0e 94 b1 02 	call	0x562	; 0x562 <CalculateStatus>
+ 814:	80 93 0c 01 	sts	0x010C, r24
+				SPDR = status;
+ 818:	8e bd       	out	0x2e, r24	; 46
+			default: //never gets here, if it does something is very wrong 
+				//FlashErrorLight(3); //turn on error light
+				;	
+		}
+	}		
+}
+ 81a:	df 91       	pop	r29
+ 81c:	cf 91       	pop	r28
+ 81e:	08 95       	ret
+
+00000820 <__vector_17>:
+transmit.  It is reevaluated at the end of a 24 byte transmission, and each time the master polls
+the slave to see if data is available or if there is room for a command to be received.  The 
+variable 'spiState' is set on the first byte so that the vector can remember what it was doing when
+it comes back.
+**************************************************************************************************/
+ISR(SPI_STC_vect) {
+ 820:	1f 92       	push	r1
+ 822:	0f 92       	push	r0
+ 824:	0f b6       	in	r0, 0x3f	; 63
+ 826:	0f 92       	push	r0
+ 828:	11 24       	eor	r1, r1
+ 82a:	2f 93       	push	r18
+ 82c:	3f 93       	push	r19
+ 82e:	4f 93       	push	r20
+ 830:	5f 93       	push	r21
+ 832:	6f 93       	push	r22
+ 834:	7f 93       	push	r23
+ 836:	8f 93       	push	r24
+ 838:	9f 93       	push	r25
+ 83a:	af 93       	push	r26
+ 83c:	bf 93       	push	r27
+ 83e:	ef 93       	push	r30
+ 840:	ff 93       	push	r31
+	if (ci == 0) //first byte = status header
+ 842:	80 91 0e 01 	lds	r24, 0x010E
+ 846:	90 91 0f 01 	lds	r25, 0x010F
+ 84a:	00 97       	sbiw	r24, 0x00	; 0
+ 84c:	19 f4       	brne	.+6      	; 0x854 <__vector_17+0x34>
+		HandleFirstByte();	
+ 84e:	0e 94 1c 03 	call	0x638	; 0x638 <HandleFirstByte>
+ 852:	09 c0       	rjmp	.+18     	; 0x866 <__vector_17+0x46>
+	else if (ci > 0 && ci < 23) //middle bytes = data	
+ 854:	01 97       	sbiw	r24, 0x01	; 1
+ 856:	86 31       	cpi	r24, 0x16	; 22
+ 858:	91 05       	cpc	r25, r1
+ 85a:	18 f4       	brcc	.+6      	; 0x862 <__vector_17+0x42>
+		HandleMiddleBytes();
+ 85c:	0e 94 4d 02 	call	0x49a	; 0x49a <HandleMiddleBytes>
+ 860:	02 c0       	rjmp	.+4      	; 0x866 <__vector_17+0x46>
+	else { //last byte = checksum
+		HandleLastByte();		
+ 862:	0e 94 e1 02 	call	0x5c2	; 0x5c2 <HandleLastByte>
+	}									
+}
+ 866:	ff 91       	pop	r31
+ 868:	ef 91       	pop	r30
+ 86a:	bf 91       	pop	r27
+ 86c:	af 91       	pop	r26
+ 86e:	9f 91       	pop	r25
+ 870:	8f 91       	pop	r24
+ 872:	7f 91       	pop	r23
+ 874:	6f 91       	pop	r22
+ 876:	5f 91       	pop	r21
+ 878:	4f 91       	pop	r20
+ 87a:	3f 91       	pop	r19
+ 87c:	2f 91       	pop	r18
+ 87e:	0f 90       	pop	r0
+ 880:	0f be       	out	0x3f, r0	; 63
+ 882:	0f 90       	pop	r0
+ 884:	1f 90       	pop	r1
+ 886:	18 95       	reti
+
+00000888 <FlashErrorLight>:
+}
+
+/**************************************************************************************************
+FlashErrorLight - flashes the LED on PORTC3 'numFlashes' times. Useful for debug purposes.
+**************************************************************************************************/
+void FlashErrorLight(int numFlashes){
+ 888:	0f 93       	push	r16
+ 88a:	1f 93       	push	r17
+	PORTC = 0;//clear the LED
+ 88c:	18 b8       	out	0x08, r1	; 8
+	error = 1;
+ 88e:	21 e0       	ldi	r18, 0x01	; 1
+ 890:	30 e0       	ldi	r19, 0x00	; 0
+ 892:	30 93 0b 01 	sts	0x010B, r19
+ 896:	20 93 0a 01 	sts	0x010A, r18
+	int i;
+	while(error){
+		for (i = 0; i < numFlashes; i++){
+ 89a:	e0 e0       	ldi	r30, 0x00	; 0
+ 89c:	f0 e0       	ldi	r31, 0x00	; 0
+			PORTC = (1<<PORTC3);
+ 89e:	68 e0       	ldi	r22, 0x08	; 8
+ 8a0:	2a c0       	rjmp	.+84     	; 0x8f6 <FlashErrorLight+0x6e>
+void FlashErrorLight(int numFlashes){
+	PORTC = 0;//clear the LED
+	error = 1;
+	int i;
+	while(error){
+		for (i = 0; i < numFlashes; i++){
+ 8a2:	af 01       	movw	r20, r30
+			PORTC = (1<<PORTC3);
+ 8a4:	68 b9       	out	0x08, r22	; 8
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 8a6:	0f ef       	ldi	r16, 0xFF	; 255
+ 8a8:	16 e1       	ldi	r17, 0x16	; 22
+ 8aa:	21 e1       	ldi	r18, 0x11	; 17
+ 8ac:	01 50       	subi	r16, 0x01	; 1
+ 8ae:	10 40       	sbci	r17, 0x00	; 0
+ 8b0:	20 40       	sbci	r18, 0x00	; 0
+ 8b2:	e1 f7       	brne	.-8      	; 0x8ac <FlashErrorLight+0x24>
+ 8b4:	00 c0       	rjmp	.+0      	; 0x8b6 <FlashErrorLight+0x2e>
+ 8b6:	00 00       	nop
+			_delay_ms(350);
+			PORTC = 0;
+ 8b8:	18 b8       	out	0x08, r1	; 8
+ 8ba:	0f ef       	ldi	r16, 0xFF	; 255
+ 8bc:	16 e1       	ldi	r17, 0x16	; 22
+ 8be:	21 e1       	ldi	r18, 0x11	; 17
+ 8c0:	01 50       	subi	r16, 0x01	; 1
+ 8c2:	10 40       	sbci	r17, 0x00	; 0
+ 8c4:	20 40       	sbci	r18, 0x00	; 0
+ 8c6:	e1 f7       	brne	.-8      	; 0x8c0 <FlashErrorLight+0x38>
+ 8c8:	00 c0       	rjmp	.+0      	; 0x8ca <FlashErrorLight+0x42>
+ 8ca:	00 00       	nop
+void FlashErrorLight(int numFlashes){
+	PORTC = 0;//clear the LED
+	error = 1;
+	int i;
+	while(error){
+		for (i = 0; i < numFlashes; i++){
+ 8cc:	4f 5f       	subi	r20, 0xFF	; 255
+ 8ce:	5f 4f       	sbci	r21, 0xFF	; 255
+ 8d0:	48 17       	cp	r20, r24
+ 8d2:	59 07       	cpc	r21, r25
+ 8d4:	39 f7       	brne	.-50     	; 0x8a4 <FlashErrorLight+0x1c>
+ 8d6:	2f ef       	ldi	r18, 0xFF	; 255
+ 8d8:	3c eb       	ldi	r19, 0xBC	; 188
+ 8da:	4f e1       	ldi	r20, 0x1F	; 31
+ 8dc:	21 50       	subi	r18, 0x01	; 1
+ 8de:	30 40       	sbci	r19, 0x00	; 0
+ 8e0:	40 40       	sbci	r20, 0x00	; 0
+ 8e2:	e1 f7       	brne	.-8      	; 0x8dc <FlashErrorLight+0x54>
+ 8e4:	00 c0       	rjmp	.+0      	; 0x8e6 <FlashErrorLight+0x5e>
+ 8e6:	00 00       	nop
+**************************************************************************************************/
+void FlashErrorLight(int numFlashes){
+	PORTC = 0;//clear the LED
+	error = 1;
+	int i;
+	while(error){
+ 8e8:	40 91 0a 01 	lds	r20, 0x010A
+ 8ec:	50 91 0b 01 	lds	r21, 0x010B
+ 8f0:	41 15       	cp	r20, r1
+ 8f2:	51 05       	cpc	r21, r1
+ 8f4:	21 f0       	breq	.+8      	; 0x8fe <FlashErrorLight+0x76>
+		for (i = 0; i < numFlashes; i++){
+ 8f6:	18 16       	cp	r1, r24
+ 8f8:	19 06       	cpc	r1, r25
+ 8fa:	9c f2       	brlt	.-90     	; 0x8a2 <FlashErrorLight+0x1a>
+ 8fc:	ec cf       	rjmp	.-40     	; 0x8d6 <FlashErrorLight+0x4e>
+			PORTC = 0;
+			_delay_ms(350);
+		}
+		_delay_ms(650); //long delay at end		
+	}
+}
+ 8fe:	1f 91       	pop	r17
+ 900:	0f 91       	pop	r16
+ 902:	08 95       	ret
+
+00000904 <ServoRead>:
+ServoRead - called by the main loop to read the current offset of each servo and create a packet
+of outgoing data to return.  Packet format is as follows - [Header][Servo1High][Servo1Low]
+[Servo2High][Servo2Low][0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0][Checksum].  For the checksum,
+everything is calculated except the header, because the header is modified before transmission.
+**************************************************************************************************/
+void ServoRead(unsigned char *checksum){
+ 904:	cf 92       	push	r12
+ 906:	df 92       	push	r13
+ 908:	ef 92       	push	r14
+ 90a:	ff 92       	push	r15
+ 90c:	0f 93       	push	r16
+ 90e:	1f 93       	push	r17
+ 910:	cf 93       	push	r28
+ 912:	df 93       	push	r29
+ 914:	8c 01       	movw	r16, r24
+	unsigned char servo1High = (servo1_offset >> 8);
+ 916:	d0 90 08 01 	lds	r13, 0x0108
+ 91a:	e0 90 09 01 	lds	r14, 0x0109
+	unsigned char servo1Low = (servo1_offset);
+	unsigned char servo2High = (servo2_offset >> 8);
+ 91e:	c0 90 06 01 	lds	r12, 0x0106
+ 922:	f0 90 07 01 	lds	r15, 0x0107
+	unsigned char servo2Low = (servo2_offset);
+	
+	while (RingBufferSpaceFree(outputBuffer) < PACKET_SIZE); //if the output buffer is full we have to wait for space to free up
+ 926:	c0 91 02 01 	lds	r28, 0x0102
+ 92a:	d0 91 03 01 	lds	r29, 0x0103
+ 92e:	ce 01       	movw	r24, r28
+ 930:	0e 94 f5 00 	call	0x1ea	; 0x1ea <RingBufferSpaceFree>
+ 934:	88 31       	cpi	r24, 0x18	; 24
+ 936:	91 05       	cpc	r25, r1
+ 938:	b4 f3       	brlt	.-20     	; 0x926 <ServoRead+0x22>
+					
+	RingBufferEnqueue(outputBuffer, SERVO); //header
+ 93a:	ce 01       	movw	r24, r28
+ 93c:	60 e4       	ldi	r22, 0x40	; 64
+ 93e:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum = 0; //the header is not XORed into the checksum here, because it will be modified later
+ 942:	f8 01       	movw	r30, r16
+ 944:	10 82       	st	Z, r1
+	RingBufferEnqueue(outputBuffer, servo1High);
+ 946:	80 91 02 01 	lds	r24, 0x0102
+ 94a:	90 91 03 01 	lds	r25, 0x0103
+ 94e:	6e 2d       	mov	r22, r14
+ 950:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= servo1High;
+ 954:	f8 01       	movw	r30, r16
+ 956:	80 81       	ld	r24, Z
+ 958:	e8 26       	eor	r14, r24
+ 95a:	e0 82       	st	Z, r14
+	RingBufferEnqueue(outputBuffer, servo1Low);
+ 95c:	80 91 02 01 	lds	r24, 0x0102
+ 960:	90 91 03 01 	lds	r25, 0x0103
+ 964:	6d 2d       	mov	r22, r13
+ 966:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= servo1Low;
+ 96a:	f8 01       	movw	r30, r16
+ 96c:	80 81       	ld	r24, Z
+ 96e:	d8 26       	eor	r13, r24
+ 970:	d0 82       	st	Z, r13
+	RingBufferEnqueue(outputBuffer, servo2High);
+ 972:	80 91 02 01 	lds	r24, 0x0102
+ 976:	90 91 03 01 	lds	r25, 0x0103
+ 97a:	6f 2d       	mov	r22, r15
+ 97c:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= servo2High;
+ 980:	f8 01       	movw	r30, r16
+ 982:	80 81       	ld	r24, Z
+ 984:	8f 25       	eor	r24, r15
+ 986:	80 83       	st	Z, r24
+	RingBufferEnqueue(outputBuffer, servo2Low);
+ 988:	80 91 02 01 	lds	r24, 0x0102
+ 98c:	90 91 03 01 	lds	r25, 0x0103
+ 990:	6c 2d       	mov	r22, r12
+ 992:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= servo2High;
+ 996:	f8 01       	movw	r30, r16
+ 998:	80 81       	ld	r24, Z
+ 99a:	f8 26       	eor	r15, r24
+ 99c:	f0 82       	st	Z, r15
+ 99e:	c2 e1       	ldi	r28, 0x12	; 18
+ 9a0:	d0 e0       	ldi	r29, 0x00	; 0
+	
+	int i;				
+	for (i = 0; i < 18; i++){ //pad the data to 22 data bytes
+		RingBufferEnqueue(outputBuffer, 0);
+ 9a2:	80 91 02 01 	lds	r24, 0x0102
+ 9a6:	90 91 03 01 	lds	r25, 0x0103
+ 9aa:	60 e0       	ldi	r22, 0x00	; 0
+ 9ac:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+ 9b0:	21 97       	sbiw	r28, 0x01	; 1
+	*checksum ^= servo2High;
+	RingBufferEnqueue(outputBuffer, servo2Low);
+	*checksum ^= servo2High;
+	
+	int i;				
+	for (i = 0; i < 18; i++){ //pad the data to 22 data bytes
+ 9b2:	b9 f7       	brne	.-18     	; 0x9a2 <ServoRead+0x9e>
+		RingBufferEnqueue(outputBuffer, 0);
+		*checksum ^= 0; //I know it doesn't do anything...
+	}
+					
+	RingBufferEnqueue(outputBuffer, *checksum); //byte 24 is the (incomplete) checksum
+ 9b4:	80 91 02 01 	lds	r24, 0x0102
+ 9b8:	90 91 03 01 	lds	r25, 0x0103
+ 9bc:	f8 01       	movw	r30, r16
+ 9be:	60 81       	ld	r22, Z
+ 9c0:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	RingBufferMultDelete(commandBuffer, 23); //all the other bytes in the command are don't cares - delete them				
+ 9c4:	80 91 04 01 	lds	r24, 0x0104
+ 9c8:	90 91 05 01 	lds	r25, 0x0105
+ 9cc:	67 e1       	ldi	r22, 0x17	; 23
+ 9ce:	70 e0       	ldi	r23, 0x00	; 0
+ 9d0:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+}
+ 9d4:	df 91       	pop	r29
+ 9d6:	cf 91       	pop	r28
+ 9d8:	1f 91       	pop	r17
+ 9da:	0f 91       	pop	r16
+ 9dc:	ff 90       	pop	r15
+ 9de:	ef 90       	pop	r14
+ 9e0:	df 90       	pop	r13
+ 9e2:	cf 90       	pop	r12
+ 9e4:	08 95       	ret
+
+000009e6 <ServoWrite>:
+
+/**************************************************************************************************
+ServoWrite - this is called by the main loop to set the servos to new angles.  The new offsets are
+checked for bounds and are discarded if they are out of bounds.
+**************************************************************************************************/
+void ServoWrite(void){
+ 9e6:	cf 93       	push	r28
+ 9e8:	df 93       	push	r29
+ 9ea:	00 d0       	rcall	.+0      	; 0x9ec <ServoWrite+0x6>
+ 9ec:	00 d0       	rcall	.+0      	; 0x9ee <ServoWrite+0x8>
+ 9ee:	cd b7       	in	r28, 0x3d	; 61
+ 9f0:	de b7       	in	r29, 0x3e	; 62
+	unsigned int servo1Temp;
+	unsigned char servo2High;
+	unsigned char servo2Low;
+	unsigned int servo2Temp;
+	
+	RingBufferDequeue(commandBuffer, &servo1High); //the first 4 bytes are the servo offsets
+ 9f2:	80 91 04 01 	lds	r24, 0x0104
+ 9f6:	90 91 05 01 	lds	r25, 0x0105
+ 9fa:	be 01       	movw	r22, r28
+ 9fc:	6f 5f       	subi	r22, 0xFF	; 255
+ 9fe:	7f 4f       	sbci	r23, 0xFF	; 255
+ a00:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferDequeue(commandBuffer, &servo1Low);
+ a04:	80 91 04 01 	lds	r24, 0x0104
+ a08:	90 91 05 01 	lds	r25, 0x0105
+ a0c:	be 01       	movw	r22, r28
+ a0e:	6e 5f       	subi	r22, 0xFE	; 254
+ a10:	7f 4f       	sbci	r23, 0xFF	; 255
+ a12:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferDequeue(commandBuffer, &servo2High);
+ a16:	80 91 04 01 	lds	r24, 0x0104
+ a1a:	90 91 05 01 	lds	r25, 0x0105
+ a1e:	be 01       	movw	r22, r28
+ a20:	6d 5f       	subi	r22, 0xFD	; 253
+ a22:	7f 4f       	sbci	r23, 0xFF	; 255
+ a24:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferDequeue(commandBuffer, &servo2Low);				
+ a28:	80 91 04 01 	lds	r24, 0x0104
+ a2c:	90 91 05 01 	lds	r25, 0x0105
+ a30:	be 01       	movw	r22, r28
+ a32:	6c 5f       	subi	r22, 0xFC	; 252
+ a34:	7f 4f       	sbci	r23, 0xFF	; 255
+ a36:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+	RingBufferMultDelete(commandBuffer, 19); //the next 19 bytes are don't-cares ->throw them away
+ a3a:	80 91 04 01 	lds	r24, 0x0104
+ a3e:	90 91 05 01 	lds	r25, 0x0105
+ a42:	63 e1       	ldi	r22, 0x13	; 19
+ a44:	70 e0       	ldi	r23, 0x00	; 0
+ a46:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					
+	servo1Temp = ((servo1High << 8) | servo1Low); //concatenate the 2 bytes and set the new offset if in bounds
+ a4a:	99 81       	ldd	r25, Y+1	; 0x01
+ a4c:	80 e0       	ldi	r24, 0x00	; 0
+ a4e:	2a 81       	ldd	r18, Y+2	; 0x02
+ a50:	30 e0       	ldi	r19, 0x00	; 0
+ a52:	28 2b       	or	r18, r24
+ a54:	39 2b       	or	r19, r25
+	servo2Temp = ((servo2High << 8) | servo2Low);
+ a56:	5b 81       	ldd	r21, Y+3	; 0x03
+ a58:	40 e0       	ldi	r20, 0x00	; 0
+ a5a:	8c 81       	ldd	r24, Y+4	; 0x04
+ a5c:	90 e0       	ldi	r25, 0x00	; 0
+ a5e:	84 2b       	or	r24, r20
+ a60:	95 2b       	or	r25, r21
+	if(servo1Temp <= 2000){
+ a62:	47 e0       	ldi	r20, 0x07	; 7
+ a64:	21 3d       	cpi	r18, 0xD1	; 209
+ a66:	34 07       	cpc	r19, r20
+ a68:	78 f4       	brcc	.+30     	; 0xa88 <ServoWrite+0xa2>
+		servo1_offset = servo1Temp>>1;
+ a6a:	36 95       	lsr	r19
+ a6c:	27 95       	ror	r18
+ a6e:	30 93 09 01 	sts	0x0109, r19
+ a72:	20 93 08 01 	sts	0x0108, r18
+		OCR0A = (1000 + servo1_offset)>>4; //set interrupt to trigger at servo offset
+ a76:	28 51       	subi	r18, 0x18	; 24
+ a78:	3c 4f       	sbci	r19, 0xFC	; 252
+ a7a:	32 95       	swap	r19
+ a7c:	22 95       	swap	r18
+ a7e:	2f 70       	andi	r18, 0x0F	; 15
+ a80:	23 27       	eor	r18, r19
+ a82:	3f 70       	andi	r19, 0x0F	; 15
+ a84:	23 27       	eor	r18, r19
+ a86:	27 bd       	out	0x27, r18	; 39
+	}		
+	if(servo2Temp <= 2000){
+ a88:	27 e0       	ldi	r18, 0x07	; 7
+ a8a:	81 3d       	cpi	r24, 0xD1	; 209
+ a8c:	92 07       	cpc	r25, r18
+ a8e:	78 f4       	brcc	.+30     	; 0xaae <ServoWrite+0xc8>
+		servo2_offset = servo2Temp>>1;
+ a90:	96 95       	lsr	r25
+ a92:	87 95       	ror	r24
+ a94:	90 93 07 01 	sts	0x0107, r25
+ a98:	80 93 06 01 	sts	0x0106, r24
+		OCR0B = (1000 + servo2_offset)>>4; //set the interrupt to the offset every time in case it changes
+ a9c:	88 51       	subi	r24, 0x18	; 24
+ a9e:	9c 4f       	sbci	r25, 0xFC	; 252
+ aa0:	92 95       	swap	r25
+ aa2:	82 95       	swap	r24
+ aa4:	8f 70       	andi	r24, 0x0F	; 15
+ aa6:	89 27       	eor	r24, r25
+ aa8:	9f 70       	andi	r25, 0x0F	; 15
+ aaa:	89 27       	eor	r24, r25
+ aac:	88 bd       	out	0x28, r24	; 40
+	}							
+}
+ aae:	0f 90       	pop	r0
+ ab0:	0f 90       	pop	r0
+ ab2:	0f 90       	pop	r0
+ ab4:	0f 90       	pop	r0
+ ab6:	df 91       	pop	r29
+ ab8:	cf 91       	pop	r28
+ aba:	08 95       	ret
+
+00000abc <CompassRead>:
+}
+
+/**************************************************************************************************
+CompassRead - Reads the heading data from the compass and constructs a return packet
+**************************************************************************************************/
+void CompassRead(unsigned char *checksum){
+ abc:	af 92       	push	r10
+ abe:	bf 92       	push	r11
+ ac0:	cf 92       	push	r12
+ ac2:	df 92       	push	r13
+ ac4:	ef 92       	push	r14
+ ac6:	ff 92       	push	r15
+ ac8:	0f 93       	push	r16
+ aca:	1f 93       	push	r17
+ acc:	cf 93       	push	r28
+ ace:	df 93       	push	r29
+ ad0:	8c 01       	movw	r16, r24
+	char headingHigh, headingLow, pitchHigh, pitchLow, rollHigh, rollLow;
+	
+	TWI_Send_Start(START);
+ ad2:	88 e0       	ldi	r24, 0x08	; 8
+ ad4:	0e 94 65 00 	call	0xca	; 0xca <TWI_Send_Start>
+	TWI_Send_Data(HMC6343_WRITE_ADDR, MT_SLAW_ACK); //I2C address and set to write	
+ ad8:	82 e3       	ldi	r24, 0x32	; 50
+ ada:	68 e1       	ldi	r22, 0x18	; 24
+ adc:	0e 94 70 00 	call	0xe0	; 0xe0 <TWI_Send_Data>
+	TWI_Send_Data(HMC6343_HEADING_REG, MT_DATA_ACK); //send command to read heading data
+ ae0:	80 e5       	ldi	r24, 0x50	; 80
+ ae2:	68 e2       	ldi	r22, 0x28	; 40
+ ae4:	0e 94 70 00 	call	0xe0	; 0xe0 <TWI_Send_Data>
+	TWI_Send_Stop();
+ ae8:	0e 94 7d 00 	call	0xfa	; 0xfa <TWI_Send_Stop>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ aec:	8f ee       	ldi	r24, 0xEF	; 239
+ aee:	90 e0       	ldi	r25, 0x00	; 0
+ af0:	01 97       	sbiw	r24, 0x01	; 1
+ af2:	f1 f7       	brne	.-4      	; 0xaf0 <CompassRead+0x34>
+ af4:	00 c0       	rjmp	.+0      	; 0xaf6 <CompassRead+0x3a>
+ af6:	00 00       	nop
+	
+	_delay_us(60);
+	
+	TWI_Send_Start(START);
+ af8:	88 e0       	ldi	r24, 0x08	; 8
+ afa:	0e 94 65 00 	call	0xca	; 0xca <TWI_Send_Start>
+	TWI_Send_Data(HMC6343_READ_ADDR, MR_SLAR_ACK); //I2C address and set to read
+ afe:	83 e3       	ldi	r24, 0x33	; 51
+ b00:	60 e4       	ldi	r22, 0x40	; 64
+ b02:	0e 94 70 00 	call	0xe0	; 0xe0 <TWI_Send_Data>
+ b06:	ef ee       	ldi	r30, 0xEF	; 239
+ b08:	f0 e0       	ldi	r31, 0x00	; 0
+ b0a:	31 97       	sbiw	r30, 0x01	; 1
+ b0c:	f1 f7       	brne	.-4      	; 0xb0a <CompassRead+0x4e>
+ b0e:	00 c0       	rjmp	.+0      	; 0xb10 <CompassRead+0x54>
+ b10:	00 00       	nop
+	_delay_us(60);
+	headingHigh = TWI_Receive_Data(MR_DATA_ACK);
+ b12:	80 e5       	ldi	r24, 0x50	; 80
+ b14:	0e 94 83 00 	call	0x106	; 0x106 <TWI_Receive_Data>
+ b18:	f8 2e       	mov	r15, r24
+ b1a:	8f ee       	ldi	r24, 0xEF	; 239
+ b1c:	90 e0       	ldi	r25, 0x00	; 0
+ b1e:	01 97       	sbiw	r24, 0x01	; 1
+ b20:	f1 f7       	brne	.-4      	; 0xb1e <CompassRead+0x62>
+ b22:	00 c0       	rjmp	.+0      	; 0xb24 <CompassRead+0x68>
+ b24:	00 00       	nop
+	_delay_us(60);
+	headingLow = TWI_Receive_Data(MR_DATA_ACK);
+ b26:	80 e5       	ldi	r24, 0x50	; 80
+ b28:	0e 94 83 00 	call	0x106	; 0x106 <TWI_Receive_Data>
+ b2c:	e8 2e       	mov	r14, r24
+ b2e:	ef ee       	ldi	r30, 0xEF	; 239
+ b30:	f0 e0       	ldi	r31, 0x00	; 0
+ b32:	31 97       	sbiw	r30, 0x01	; 1
+ b34:	f1 f7       	brne	.-4      	; 0xb32 <CompassRead+0x76>
+ b36:	00 c0       	rjmp	.+0      	; 0xb38 <CompassRead+0x7c>
+ b38:	00 00       	nop
+	_delay_us(60);
+	pitchHigh = TWI_Receive_Data(MR_DATA_ACK);
+ b3a:	80 e5       	ldi	r24, 0x50	; 80
+ b3c:	0e 94 83 00 	call	0x106	; 0x106 <TWI_Receive_Data>
+ b40:	d8 2e       	mov	r13, r24
+ b42:	8f ee       	ldi	r24, 0xEF	; 239
+ b44:	90 e0       	ldi	r25, 0x00	; 0
+ b46:	01 97       	sbiw	r24, 0x01	; 1
+ b48:	f1 f7       	brne	.-4      	; 0xb46 <CompassRead+0x8a>
+ b4a:	00 c0       	rjmp	.+0      	; 0xb4c <CompassRead+0x90>
+ b4c:	00 00       	nop
+	_delay_us(60);
+	pitchLow = TWI_Receive_Data(MR_DATA_ACK);
+ b4e:	80 e5       	ldi	r24, 0x50	; 80
+ b50:	0e 94 83 00 	call	0x106	; 0x106 <TWI_Receive_Data>
+ b54:	c8 2e       	mov	r12, r24
+ b56:	ef ee       	ldi	r30, 0xEF	; 239
+ b58:	f0 e0       	ldi	r31, 0x00	; 0
+ b5a:	31 97       	sbiw	r30, 0x01	; 1
+ b5c:	f1 f7       	brne	.-4      	; 0xb5a <CompassRead+0x9e>
+ b5e:	00 c0       	rjmp	.+0      	; 0xb60 <CompassRead+0xa4>
+ b60:	00 00       	nop
+	_delay_us(60);
+	rollHigh = TWI_Receive_Data(MR_DATA_ACK);
+ b62:	80 e5       	ldi	r24, 0x50	; 80
+ b64:	0e 94 83 00 	call	0x106	; 0x106 <TWI_Receive_Data>
+ b68:	b8 2e       	mov	r11, r24
+ b6a:	8f ee       	ldi	r24, 0xEF	; 239
+ b6c:	90 e0       	ldi	r25, 0x00	; 0
+ b6e:	01 97       	sbiw	r24, 0x01	; 1
+ b70:	f1 f7       	brne	.-4      	; 0xb6e <CompassRead+0xb2>
+ b72:	00 c0       	rjmp	.+0      	; 0xb74 <CompassRead+0xb8>
+ b74:	00 00       	nop
+	_delay_us(60);
+	rollLow = TWI_Receive_Data(MR_DATA_NACK);
+ b76:	88 e5       	ldi	r24, 0x58	; 88
+ b78:	0e 94 83 00 	call	0x106	; 0x106 <TWI_Receive_Data>
+ b7c:	a8 2e       	mov	r10, r24
+	TWI_Send_Stop();
+ b7e:	0e 94 7d 00 	call	0xfa	; 0xfa <TWI_Send_Stop>
+	
+	while (RingBufferSpaceFree(outputBuffer) < PACKET_SIZE); //if the output buffer is full we have to wait for space to free up
+ b82:	c0 91 02 01 	lds	r28, 0x0102
+ b86:	d0 91 03 01 	lds	r29, 0x0103
+ b8a:	ce 01       	movw	r24, r28
+ b8c:	0e 94 f5 00 	call	0x1ea	; 0x1ea <RingBufferSpaceFree>
+ b90:	88 31       	cpi	r24, 0x18	; 24
+ b92:	91 05       	cpc	r25, r1
+ b94:	b4 f3       	brlt	.-20     	; 0xb82 <CompassRead+0xc6>
+					
+	RingBufferEnqueue(outputBuffer, COMPASS); //header
+ b96:	ce 01       	movw	r24, r28
+ b98:	60 e3       	ldi	r22, 0x30	; 48
+ b9a:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum = 0; //the header is not XORed into the checksum here, because it will be modified later
+ b9e:	f8 01       	movw	r30, r16
+ ba0:	10 82       	st	Z, r1
+	RingBufferEnqueue(outputBuffer, headingHigh);
+ ba2:	80 91 02 01 	lds	r24, 0x0102
+ ba6:	90 91 03 01 	lds	r25, 0x0103
+ baa:	6f 2d       	mov	r22, r15
+ bac:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= headingHigh;
+ bb0:	f8 01       	movw	r30, r16
+ bb2:	80 81       	ld	r24, Z
+ bb4:	f8 26       	eor	r15, r24
+ bb6:	f0 82       	st	Z, r15
+	RingBufferEnqueue(outputBuffer, headingLow);
+ bb8:	80 91 02 01 	lds	r24, 0x0102
+ bbc:	90 91 03 01 	lds	r25, 0x0103
+ bc0:	6e 2d       	mov	r22, r14
+ bc2:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= headingLow;
+ bc6:	f8 01       	movw	r30, r16
+ bc8:	80 81       	ld	r24, Z
+ bca:	e8 26       	eor	r14, r24
+ bcc:	e0 82       	st	Z, r14
+	RingBufferEnqueue(outputBuffer, pitchHigh);
+ bce:	80 91 02 01 	lds	r24, 0x0102
+ bd2:	90 91 03 01 	lds	r25, 0x0103
+ bd6:	6d 2d       	mov	r22, r13
+ bd8:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= pitchHigh;
+ bdc:	f8 01       	movw	r30, r16
+ bde:	80 81       	ld	r24, Z
+ be0:	d8 26       	eor	r13, r24
+ be2:	d0 82       	st	Z, r13
+	RingBufferEnqueue(outputBuffer, pitchLow);
+ be4:	80 91 02 01 	lds	r24, 0x0102
+ be8:	90 91 03 01 	lds	r25, 0x0103
+ bec:	6c 2d       	mov	r22, r12
+ bee:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= pitchLow;
+ bf2:	f8 01       	movw	r30, r16
+ bf4:	80 81       	ld	r24, Z
+ bf6:	c8 26       	eor	r12, r24
+ bf8:	c0 82       	st	Z, r12
+	RingBufferEnqueue(outputBuffer, rollHigh);
+ bfa:	80 91 02 01 	lds	r24, 0x0102
+ bfe:	90 91 03 01 	lds	r25, 0x0103
+ c02:	6b 2d       	mov	r22, r11
+ c04:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= rollHigh;
+ c08:	f8 01       	movw	r30, r16
+ c0a:	80 81       	ld	r24, Z
+ c0c:	b8 26       	eor	r11, r24
+ c0e:	b0 82       	st	Z, r11
+	RingBufferEnqueue(outputBuffer, rollLow);
+ c10:	80 91 02 01 	lds	r24, 0x0102
+ c14:	90 91 03 01 	lds	r25, 0x0103
+ c18:	6a 2d       	mov	r22, r10
+ c1a:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	*checksum ^= rollLow;
+ c1e:	f8 01       	movw	r30, r16
+ c20:	80 81       	ld	r24, Z
+ c22:	a8 26       	eor	r10, r24
+ c24:	a0 82       	st	Z, r10
+ c26:	c0 e1       	ldi	r28, 0x10	; 16
+ c28:	d0 e0       	ldi	r29, 0x00	; 0
+	
+	int i;				
+	for (i = 0; i < 16; i++){ //pad the data to 22 data bytes
+		RingBufferEnqueue(outputBuffer, 0);
+ c2a:	80 91 02 01 	lds	r24, 0x0102
+ c2e:	90 91 03 01 	lds	r25, 0x0103
+ c32:	60 e0       	ldi	r22, 0x00	; 0
+ c34:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+ c38:	21 97       	sbiw	r28, 0x01	; 1
+	*checksum ^= rollHigh;
+	RingBufferEnqueue(outputBuffer, rollLow);
+	*checksum ^= rollLow;
+	
+	int i;				
+	for (i = 0; i < 16; i++){ //pad the data to 22 data bytes
+ c3a:	b9 f7       	brne	.-18     	; 0xc2a <CompassRead+0x16e>
+		RingBufferEnqueue(outputBuffer, 0);
+		*checksum ^= 0; //I know it doesn't do anything...
+	}
+					
+	RingBufferEnqueue(outputBuffer, *checksum); //byte 24 is the (incomplete) checksum
+ c3c:	80 91 02 01 	lds	r24, 0x0102
+ c40:	90 91 03 01 	lds	r25, 0x0103
+ c44:	f8 01       	movw	r30, r16
+ c46:	60 81       	ld	r22, Z
+ c48:	0e 94 f0 01 	call	0x3e0	; 0x3e0 <RingBufferEnqueue>
+	RingBufferMultDelete(commandBuffer, 23); //all the other bytes in the command are don't cares - delete them
+ c4c:	80 91 04 01 	lds	r24, 0x0104
+ c50:	90 91 05 01 	lds	r25, 0x0105
+ c54:	67 e1       	ldi	r22, 0x17	; 23
+ c56:	70 e0       	ldi	r23, 0x00	; 0
+ c58:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+ c5c:	df 91       	pop	r29
+ c5e:	cf 91       	pop	r28
+ c60:	1f 91       	pop	r17
+ c62:	0f 91       	pop	r16
+ c64:	ff 90       	pop	r15
+ c66:	ef 90       	pop	r14
+ c68:	df 90       	pop	r13
+ c6a:	cf 90       	pop	r12
+ c6c:	bf 90       	pop	r11
+ c6e:	af 90       	pop	r10
+ c70:	08 95       	ret
+
+00000c72 <main>:
+
+/**************************************************************************************************
+Main Loop - initializes everything, executes received commands, loads outgoing data buffer
+**************************************************************************************************/
+int main(void)
+{
+ c72:	cf 93       	push	r28
+ c74:	df 93       	push	r29
+ c76:	00 d0       	rcall	.+0      	; 0xc78 <main+0x6>
+ c78:	0f 92       	push	r0
+ c7a:	cd b7       	in	r28, 0x3d	; 61
+ c7c:	de b7       	in	r29, 0x3e	; 62
+	//Initialize all faculties needed for operation
+	Initialize_SPI_Slave(MSB);
+ c7e:	80 e0       	ldi	r24, 0x00	; 0
+ c80:	90 e0       	ldi	r25, 0x00	; 0
+ c82:	0e 94 53 00 	call	0xa6	; 0xa6 <Initialize_SPI_Slave>
+	Initialize_USART(BAUD_PRESCALE);
+ c86:	87 e6       	ldi	r24, 0x67	; 103
+ c88:	90 e0       	ldi	r25, 0x00	; 0
+ c8a:	0e 94 94 00 	call	0x128	; 0x128 <Initialize_USART>
+	Initialize_TWI_Master();
+ c8e:	0e 94 61 00 	call	0xc2	; 0xc2 <Initialize_TWI_Master>
+	RingBufferInit(commandBuffer);
+ c92:	80 91 04 01 	lds	r24, 0x0104
+ c96:	90 91 05 01 	lds	r25, 0x0105
+ c9a:	0e 94 b0 00 	call	0x160	; 0x160 <RingBufferInit>
+	RingBufferInit(outputBuffer);
+ c9e:	80 91 02 01 	lds	r24, 0x0102
+ ca2:	90 91 03 01 	lds	r25, 0x0103
+ ca6:	0e 94 b0 00 	call	0x160	; 0x160 <RingBufferInit>
+	
+	//Port I/O settings
+	DDRC |= (1 << 0); //PORTC0 is output - 5v normally
+ caa:	38 9a       	sbi	0x07, 0	; 7
+	DDRC |= (1 << 3); //PORTC3 is output - Error Light
+ cac:	3b 9a       	sbi	0x07, 3	; 7
+	DDRD |= 0b01100000; //PORTD5 and D6 output - Servos 1 and 2
+ cae:	8a b1       	in	r24, 0x0a	; 10
+ cb0:	80 66       	ori	r24, 0x60	; 96
+ cb2:	8a b9       	out	0x0a, r24	; 10
+	PORTD |= 0b01100000;
+ cb4:	8b b1       	in	r24, 0x0b	; 11
+ cb6:	80 66       	ori	r24, 0x60	; 96
+ cb8:	8b b9       	out	0x0b, r24	; 11
+	
+	//Timer 1 settings
+	//Phase and Frequency Correct
+	//Freq = 40Hz
+	//TOP = ICR1 = 25000
+	ICR1 = 25000;
+ cba:	88 ea       	ldi	r24, 0xA8	; 168
+ cbc:	91 e6       	ldi	r25, 0x61	; 97
+ cbe:	90 93 87 00 	sts	0x0087, r25
+ cc2:	80 93 86 00 	sts	0x0086, r24
+	TCCR1A = 0b00000000;
+ cc6:	10 92 80 00 	sts	0x0080, r1
+	TCCR1B |=  (1 << CS11); // Set timer 1 prescaler to /8     (1 << WGM13) |
+ cca:	e1 e8       	ldi	r30, 0x81	; 129
+ ccc:	f0 e0       	ldi	r31, 0x00	; 0
+ cce:	80 81       	ld	r24, Z
+ cd0:	82 60       	ori	r24, 0x02	; 2
+ cd2:	80 83       	st	Z, r24
+	TIMSK1 |= (1 << OCIE1A); //(1 << OCIE1B) | 
+ cd4:	ef e6       	ldi	r30, 0x6F	; 111
+ cd6:	f0 e0       	ldi	r31, 0x00	; 0
+ cd8:	80 81       	ld	r24, Z
+ cda:	82 60       	ori	r24, 0x02	; 2
+ cdc:	80 83       	st	Z, r24
+	
+	TCCR0A = (1<<COM0A1)|(1<<COM0B1);
+ cde:	80 ea       	ldi	r24, 0xA0	; 160
+ ce0:	84 bd       	out	0x24, r24	; 36
+	TCCR0B = (1<<CS02);
+ ce2:	84 e0       	ldi	r24, 0x04	; 4
+ ce4:	85 bd       	out	0x25, r24	; 37
+	
+	//Mars Rover com settings
+	status = (DATA_EMPTY | BUFR_READY | NO_ERROR);
+ ce6:	10 92 0c 01 	sts	0x010C, r1
+	SPDR = status; //initial state of machine 
+ cea:	1e bc       	out	0x2e, r1	; 46
+	
+	sei(); //enable interrupts
+ cec:	78 94       	sei
+
+	//Variables for the main loop
+	unsigned char header = 0; //used to store the header of the current command
+ cee:	19 82       	std	Y+1, r1	; 0x01
+	unsigned char byte = 0;
+ cf0:	1a 82       	std	Y+2, r1	; 0x02
+		if (RingBufferFillCount(commandBuffer) >= PACKET_SIZE){ //if we have a command in the buffer
+
+			RingBufferDequeue(commandBuffer, &header); //get the first byte (header) out
+			header &= DEVICE_RW; //only look at device ID and whether its read/write
+
+			switch (header){
+ cf2:	0f 2e       	mov	r0, r31
+ cf4:	f6 e1       	ldi	r31, 0x16	; 22
+ cf6:	ef 2e       	mov	r14, r31
+ cf8:	ff 24       	eor	r15, r15
+ cfa:	f0 2d       	mov	r31, r0
+
+	int i; //generic index
+	
+	//Main loop
+	while(1){ //Execute commands as they come in		
+		outgoingChecksum = 0;//reset the checksum
+ cfc:	1b 82       	std	Y+3, r1	; 0x03
+		
+		if (RingBufferFillCount(commandBuffer) >= PACKET_SIZE){ //if we have a command in the buffer
+ cfe:	00 91 04 01 	lds	r16, 0x0104
+ d02:	10 91 05 01 	lds	r17, 0x0105
+ d06:	c8 01       	movw	r24, r16
+ d08:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <RingBufferFillCount>
+ d0c:	88 31       	cpi	r24, 0x18	; 24
+ d0e:	91 05       	cpc	r25, r1
+ d10:	ac f3       	brlt	.-22     	; 0xcfc <main+0x8a>
+
+			RingBufferDequeue(commandBuffer, &header); //get the first byte (header) out
+ d12:	c8 01       	movw	r24, r16
+ d14:	be 01       	movw	r22, r28
+ d16:	6f 5f       	subi	r22, 0xFF	; 255
+ d18:	7f 4f       	sbci	r23, 0xFF	; 255
+ d1a:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+			header &= DEVICE_RW; //only look at device ID and whether its read/write
+ d1e:	89 81       	ldd	r24, Y+1	; 0x01
+ d20:	81 7f       	andi	r24, 0xF1	; 241
+ d22:	89 83       	std	Y+1, r24	; 0x01
+
+			switch (header){
+ d24:	80 33       	cpi	r24, 0x30	; 48
+ d26:	09 f4       	brne	.+2      	; 0xd2a <main+0xb8>
+ d28:	54 c0       	rjmp	.+168    	; 0xdd2 <main+0x160>
+ d2a:	81 33       	cpi	r24, 0x31	; 49
+ d2c:	70 f4       	brcc	.+28     	; 0xd4a <main+0xd8>
+ d2e:	81 31       	cpi	r24, 0x11	; 17
+ d30:	29 f1       	breq	.+74     	; 0xd7c <main+0x10a>
+ d32:	82 31       	cpi	r24, 0x12	; 18
+ d34:	20 f4       	brcc	.+8      	; 0xd3e <main+0xcc>
+ d36:	80 31       	cpi	r24, 0x10	; 16
+ d38:	09 f0       	breq	.+2      	; 0xd3c <main+0xca>
+ d3a:	64 c0       	rjmp	.+200    	; 0xe04 <main+0x192>
+ d3c:	16 c0       	rjmp	.+44     	; 0xd6a <main+0xf8>
+ d3e:	80 32       	cpi	r24, 0x20	; 32
+ d40:	31 f1       	breq	.+76     	; 0xd8e <main+0x11c>
+ d42:	81 32       	cpi	r24, 0x21	; 33
+ d44:	09 f0       	breq	.+2      	; 0xd48 <main+0xd6>
+ d46:	5e c0       	rjmp	.+188    	; 0xe04 <main+0x192>
+ d48:	2b c0       	rjmp	.+86     	; 0xda0 <main+0x12e>
+ d4a:	80 34       	cpi	r24, 0x40	; 64
+ d4c:	09 f4       	brne	.+2      	; 0xd50 <main+0xde>
+ d4e:	4f c0       	rjmp	.+158    	; 0xdee <main+0x17c>
+ d50:	81 34       	cpi	r24, 0x41	; 65
+ d52:	20 f4       	brcc	.+8      	; 0xd5c <main+0xea>
+ d54:	81 33       	cpi	r24, 0x31	; 49
+ d56:	09 f0       	breq	.+2      	; 0xd5a <main+0xe8>
+ d58:	55 c0       	rjmp	.+170    	; 0xe04 <main+0x192>
+ d5a:	40 c0       	rjmp	.+128    	; 0xddc <main+0x16a>
+ d5c:	81 34       	cpi	r24, 0x41	; 65
+ d5e:	09 f4       	brne	.+2      	; 0xd62 <main+0xf0>
+ d60:	4b c0       	rjmp	.+150    	; 0xdf8 <main+0x186>
+ d62:	81 35       	cpi	r24, 0x51	; 81
+ d64:	09 f0       	breq	.+2      	; 0xd68 <main+0xf6>
+ d66:	4e c0       	rjmp	.+156    	; 0xe04 <main+0x192>
+ d68:	4a c0       	rjmp	.+148    	; 0xdfe <main+0x18c>
+				case GENERAL_R: //reserved for later use - a read command issued directly to the uC
+					RingBufferMultDelete(commandBuffer, 23); //delete the rest of the command
+ d6a:	80 91 04 01 	lds	r24, 0x0104
+ d6e:	90 91 05 01 	lds	r25, 0x0105
+ d72:	67 e1       	ldi	r22, 0x17	; 23
+ d74:	70 e0       	ldi	r23, 0x00	; 0
+ d76:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					break;
+ d7a:	c0 cf       	rjmp	.-128    	; 0xcfc <main+0x8a>
+					
+				case GENERAL_W: //reserved for later use - a write command issued directly to the uC
+					RingBufferMultDelete(commandBuffer, 23); //delete the rest of the command
+ d7c:	80 91 04 01 	lds	r24, 0x0104
+ d80:	90 91 05 01 	lds	r25, 0x0105
+ d84:	67 e1       	ldi	r22, 0x17	; 23
+ d86:	70 e0       	ldi	r23, 0x00	; 0
+ d88:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					break;
+ d8c:	b7 cf       	rjmp	.-146    	; 0xcfc <main+0x8a>
+					
+				case CAMERA_R: //read camera state - optical zoom level, digital zoom level, (what else?)
+					RingBufferMultDelete(commandBuffer, 23); //delete the rest of the command
+ d8e:	80 91 04 01 	lds	r24, 0x0104
+ d92:	90 91 05 01 	lds	r25, 0x0105
+ d96:	67 e1       	ldi	r22, 0x17	; 23
+ d98:	70 e0       	ldi	r23, 0x00	; 0
+ d9a:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					break;
+ d9e:	ae cf       	rjmp	.-164    	; 0xcfc <main+0x8a>
+		if (RingBufferFillCount(commandBuffer) >= PACKET_SIZE){ //if we have a command in the buffer
+
+			RingBufferDequeue(commandBuffer, &header); //get the first byte (header) out
+			header &= DEVICE_RW; //only look at device ID and whether its read/write
+
+			switch (header){
+ da0:	87 01       	movw	r16, r14
+					RingBufferMultDelete(commandBuffer, 23); //delete the rest of the command
+					break;
+					
+				case CAMERA_W: //passes a command from the base station to the camera
+					for (i = 0; i < 22; i++){ //transmit all 22 data bytes to the camera
+						RingBufferDequeue(commandBuffer, &byte);
+ da2:	80 91 04 01 	lds	r24, 0x0104
+ da6:	90 91 05 01 	lds	r25, 0x0105
+ daa:	be 01       	movw	r22, r28
+ dac:	6e 5f       	subi	r22, 0xFE	; 254
+ dae:	7f 4f       	sbci	r23, 0xFF	; 255
+ db0:	0e 94 16 01 	call	0x22c	; 0x22c <RingBufferDequeue>
+						USART_Transmit(byte);
+ db4:	8a 81       	ldd	r24, Y+2	; 0x02
+ db6:	0e 94 9e 00 	call	0x13c	; 0x13c <USART_Transmit>
+ dba:	01 50       	subi	r16, 0x01	; 1
+ dbc:	10 40       	sbci	r17, 0x00	; 0
+				case CAMERA_R: //read camera state - optical zoom level, digital zoom level, (what else?)
+					RingBufferMultDelete(commandBuffer, 23); //delete the rest of the command
+					break;
+					
+				case CAMERA_W: //passes a command from the base station to the camera
+					for (i = 0; i < 22; i++){ //transmit all 22 data bytes to the camera
+ dbe:	89 f7       	brne	.-30     	; 0xda2 <main+0x130>
+						RingBufferDequeue(commandBuffer, &byte);
+						USART_Transmit(byte);
+					}
+					RingBufferMultDelete(commandBuffer, 1); //throw last byte away - its the checksum
+ dc0:	80 91 04 01 	lds	r24, 0x0104
+ dc4:	90 91 05 01 	lds	r25, 0x0105
+ dc8:	61 e0       	ldi	r22, 0x01	; 1
+ dca:	70 e0       	ldi	r23, 0x00	; 0
+ dcc:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					break;
+ dd0:	95 cf       	rjmp	.-214    	; 0xcfc <main+0x8a>
+					
+				case COMPASS_R: //reads all values in from the compass
+					CompassRead(&outgoingChecksum);
+ dd2:	ce 01       	movw	r24, r28
+ dd4:	03 96       	adiw	r24, 0x03	; 3
+ dd6:	0e 94 5e 05 	call	0xabc	; 0xabc <CompassRead>
+					break;
+ dda:	90 cf       	rjmp	.-224    	; 0xcfc <main+0x8a>
+					
+				case COMPASS_W: //writes a command directly to the compass
+					RingBufferMultDelete(commandBuffer, 23); //throw last byte away - its the checksum
+ ddc:	80 91 04 01 	lds	r24, 0x0104
+ de0:	90 91 05 01 	lds	r25, 0x0105
+ de4:	67 e1       	ldi	r22, 0x17	; 23
+ de6:	70 e0       	ldi	r23, 0x00	; 0
+ de8:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+					break;
+ dec:	87 cf       	rjmp	.-242    	; 0xcfc <main+0x8a>
+					
+				case SERVO_R: //returns current offset of the servos
+					ServoRead(&outgoingChecksum);
+ dee:	ce 01       	movw	r24, r28
+ df0:	03 96       	adiw	r24, 0x03	; 3
+ df2:	0e 94 82 04 	call	0x904	; 0x904 <ServoRead>
+					break;
+ df6:	82 cf       	rjmp	.-252    	; 0xcfc <main+0x8a>
+					
+				case SERVO_W:
+					ServoWrite();
+ df8:	0e 94 f3 04 	call	0x9e6	; 0x9e6 <ServoWrite>
+					break;
+ dfc:	7f cf       	rjmp	.-258    	; 0xcfc <main+0x8a>
+					
+				case PANTILT_W:
+					PanTilt();
+ dfe:	0e 94 7d 01 	call	0x2fa	; 0x2fa <PanTilt>
+					break;
+ e02:	7c cf       	rjmp	.-264    	; 0xcfc <main+0x8a>
+					
+				default: //error state - device ID wasn't valid
+					RingBufferMultDelete(commandBuffer, 23); //delete the rest of the bad command
+ e04:	80 91 04 01 	lds	r24, 0x0104
+ e08:	90 91 05 01 	lds	r25, 0x0105
+ e0c:	67 e1       	ldi	r22, 0x17	; 23
+ e0e:	70 e0       	ldi	r23, 0x00	; 0
+ e10:	0e 94 65 01 	call	0x2ca	; 0x2ca <RingBufferMultDelete>
+ e14:	73 cf       	rjmp	.-282    	; 0xcfc <main+0x8a>
+
+00000e16 <__divmodhi4>:
+ e16:	97 fb       	bst	r25, 7
+ e18:	09 2e       	mov	r0, r25
+ e1a:	07 26       	eor	r0, r23
+ e1c:	0a d0       	rcall	.+20     	; 0xe32 <__divmodhi4_neg1>
+ e1e:	77 fd       	sbrc	r23, 7
+ e20:	04 d0       	rcall	.+8      	; 0xe2a <__divmodhi4_neg2>
+ e22:	0c d0       	rcall	.+24     	; 0xe3c <__udivmodhi4>
+ e24:	06 d0       	rcall	.+12     	; 0xe32 <__divmodhi4_neg1>
+ e26:	00 20       	and	r0, r0
+ e28:	1a f4       	brpl	.+6      	; 0xe30 <__divmodhi4_exit>
+
+00000e2a <__divmodhi4_neg2>:
+ e2a:	70 95       	com	r23
+ e2c:	61 95       	neg	r22
+ e2e:	7f 4f       	sbci	r23, 0xFF	; 255
+
+00000e30 <__divmodhi4_exit>:
+ e30:	08 95       	ret
+
+00000e32 <__divmodhi4_neg1>:
+ e32:	f6 f7       	brtc	.-4      	; 0xe30 <__divmodhi4_exit>
+ e34:	90 95       	com	r25
+ e36:	81 95       	neg	r24
+ e38:	9f 4f       	sbci	r25, 0xFF	; 255
+ e3a:	08 95       	ret
+
+00000e3c <__udivmodhi4>:
+ e3c:	aa 1b       	sub	r26, r26
+ e3e:	bb 1b       	sub	r27, r27
+ e40:	51 e1       	ldi	r21, 0x11	; 17
+ e42:	07 c0       	rjmp	.+14     	; 0xe52 <__udivmodhi4_ep>
+
+00000e44 <__udivmodhi4_loop>:
+ e44:	aa 1f       	adc	r26, r26
+ e46:	bb 1f       	adc	r27, r27
+ e48:	a6 17       	cp	r26, r22
+ e4a:	b7 07       	cpc	r27, r23
+ e4c:	10 f0       	brcs	.+4      	; 0xe52 <__udivmodhi4_ep>
+ e4e:	a6 1b       	sub	r26, r22
+ e50:	b7 0b       	sbc	r27, r23
+
+00000e52 <__udivmodhi4_ep>:
+ e52:	88 1f       	adc	r24, r24
+ e54:	99 1f       	adc	r25, r25
+ e56:	5a 95       	dec	r21
+ e58:	a9 f7       	brne	.-22     	; 0xe44 <__udivmodhi4_loop>
+ e5a:	80 95       	com	r24
+ e5c:	90 95       	com	r25
+ e5e:	bc 01       	movw	r22, r24
+ e60:	cd 01       	movw	r24, r26
+ e62:	08 95       	ret
+
+00000e64 <_exit>:
+ e64:	f8 94       	cli
+
+00000e66 <__stop_program>:
+ e66:	ff cf       	rjmp	.-2      	; 0xe66 <__stop_program>

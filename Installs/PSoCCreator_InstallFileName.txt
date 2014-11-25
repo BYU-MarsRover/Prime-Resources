@@ -1,0 +1,3 @@
+PSoCCreatorSetup_3.0_sp2.exe
+
+Google the above to try to avoid the annoying registration process that Cypress makes you do.

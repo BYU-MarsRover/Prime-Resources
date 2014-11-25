@@ -1,0 +1,3 @@
+http://en.sourceforge.jp/projects/ttssh2/releases/
+
+The above link is the download page for TeraTerm, the Serial Terminal Emulator that most team members are using.

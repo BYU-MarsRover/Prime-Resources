@@ -1,0 +1,459 @@
+BYU Mars Rover Packet Protocol
+
+Mostly inspired from MAV Link
+https://pixhawk.ethz.ch/mavlink/
+
+Payload Size					uint8_t		Size of Payload, not inc BrdId, Seq, MsgId
+Board Id						uint8_t		Main:0x01, Arm:0x02, etc. Target to Id if <0x1x>, or is own Id if <0x0x>
+Sequence Counter				uint16_t	As UDP does not guarantee delivery order, this is needed to exclude old commands.
+Message Id						uint8_t		Heartbeat:0x00, System Status:0x01, etc
+Payload							n bytes		Payload Frame, as detailed below
+
+
+Message Id Bit Fields
+76543210
+--ABnnnn
+
+-:	Not Used
+A:	Direction Bit
+B:	Board and Network Control Bit (Reserved/Required for all controller boards)
+n:	Command or Telemetry Message Identifier
+
+Examples:
+0x0_ is a packet being transmitted from the rover asynchronously
+0x2_ is a packet being send from the Basestation to the rover
+0x10 is board health from a specific board
+
+Send/Receive System Groupings:
+xx 0000		Ping and Health Packets, common to all control boards
+x0 0001		Rover Status/Command
+x0 0010		Arm Status/Command
+x0 0011		Gimbal Status/Command
+x0 01xx		Sensory Systems:
+x0 0100			GPS
+x0 0101			IMU
+x0 0110			ISHAAMA
+x0 0111			LIFERAY
+00 10xx		Reserved, perhaps Sensory Sys part 2:
+00 1000
+00 1001
+00 1010
+00 1011			
+00 11xx		Feedback Reporting / Debugging	
+00 1100			DragonLink PPM Frame Values		
+00 1101			Drive and Gimbal Setpoints		
+00 1110			Arm Setpoints		
+00 1111			Custom Debugging Packet
+
+
+---------------------------------------------------------------------------------------------------
+
+Payload Frame Definitions: 		<Packet #> (Nature of Travel) [# of Bytes]
+
+	Board-Level Health and Comm Utilities ---------------------------
+		Network Config	<0x30> (Basestation Command to Rover)
+			telemetryMask_A			uint16_t	One-Hot Encoding, each bit selects a message Id type
+			telemetryRate_A			uint8_t		Sets the transmit rate for Group A; 0:Disable, 1:10Hz,
+			telemetryMask_B			uint16_t	Same as above. Ex: 0x1020 Selects only DragLink & IMU
+			telemetryRate_B			uint8_t		Same as above, but for Group B. 2:5Hz, 3:1Hz, 4:10sec
+			
+		Board Health	<0x10> (Rover Telemetry) [10]
+			systemTimestamp			uint32_t	Milliseconds from boot
+			cpuLoad					uint16_t	[0:100.0%]
+			busErrors				uint16_t	Count of I2C/SPI Bus errors
+			ethernetErrors			uint16_t	Count of Ethernet errors
+			someOtherMetric			uint16_t	Probably packet lag time, etc
+			
+		Ping Packet		<0x20> (Basestation Command to Rover) [8]
+			Arbitrary Payload		8 bytes		Basestation-generated payload, proves loopback works.
+			
+		Heartbeat/Ping	<0x00> (Rover Response to Ping Packet) [12]
+			systemTimestamp			uint32_t	Milliseconds from boot
+			Arbitrary Payload		8 bytes		Board echos the previous ping packet payload.
+			
+			
+	Async Telemetry -------------------------------------------------
+		Rover Status	<0x01> (Rover Telemetry) [16]
+			systemState				uint8_t		0x00:Normal, 0xFF:Failsafe/Loss-Link, etc
+			roverVoltage			uint16_t	[0:65.535 V]
+			roverCurrent			int16_t		[- :+327.67 A]
+			mAhCounter				int32_t		mAh Used/Charged
+			ubntLinkInteg			uint16_t	[0:100.0%]
+			dragonLinkRSSI			uint16_t	[0:100.0%]
+			
+		Arm Status		<0x02> (Rover Telemetry) [7+]
+			systemState				uint8_t		0x00:Normal, 0xFF:Failsafe/Loss-Link, etc
+			dynamixelErrors			uint16_t	Count of Dynamixel comm errors
+			PID 1 Error	Term		int16_t		Current PID Error Term, or integrator accumulation
+			PID 2 Error Term
+			etc
+			
+		GPS Position	<0x04> (Rover Telemetry) [26]
+			lat						int32_t		[- :+89.9999999] Example: 40.2470000
+			lon						int32_t		[- :+179.9999999] -111.6475000
+			alt						int32_t		Alt in millimeters
+			hdop					uint16_t	Horizontal DOP in cm
+			vdop					uint16_t	Vertical DOP in cm
+			vel						uint16_t	Groundspeed in cm/s [0:655.35 m/s]
+			course					uint16_t	[0:359.99 deg]
+			fix_type				uint8_t		0/1:None, 2:2D, 3:3D, etc
+			sats					uint8_t		Sat Count
+			
+		IMU Samples		<0x05> (Rover Telemetry) [22]
+			xacc					int16_t		All of these are raw values.
+			yacc					int16_t
+			zacc					int16_t
+			xgyro					int16_t
+			ygyro					int16_t
+			zgyro					int16_t
+			xmag					int16_t
+			ymag					int16_t
+			zmag					int16_t
+			
+		ISHAAMA Status	<0x06> (Rover Telemetry) [6]
+			hygrometer				int16_t
+			phMeter					int16_t
+			
+		LIFERAY Status	<0x07> (Rover Telemetry) [4+]
+			laserDutyCycle			uint8_t		Current laser PWM value
+			
+		DragLink Sumry	<0x0C> (Rover Telemetry) [20]
+			ppmCh1					uint16_t	All of these are raw values in microseconds
+			ppmCh2					uint16_t	[1000:2000]
+			ppmCh3					uint16_t
+			ppmCh4					uint16_t
+			ppmCh5					uint16_t
+			ppmCh6					uint16_t
+			ppmCh7					uint16_t
+			ppmCh8					uint16_t
+			
+		Commands Sumry	<0x0D> (Rover Telemetry) [14] (Could be merged into <0x01/2>, but nicer divided)
+			driveFwd				int16_t		Forward/Reverse drive command
+			driveSteer				int16_t		Left/Right drive component
+			gimbalPan				int16_t		Gimbal Pan
+			gimbalTilt				int16_t		Gimbal Tilt
+			gimbalZoom				int16_t		Gimbal Zoom
+			
+		Arm Setpoints	<0x0E> (Rover Telemetry) []
+			baseAzimuth				int16_t
+			shoulder				int16_t
+			elbow					int16_t
+			wristTilt				int16_t
+			wristRotate				int16_t
+			effectorA				int16_t
+			effectorB				int16_t
+			effectorC				int16_t
+			
+		Custom Debug	<0x0F> (Rover Telemetry) [4+]
+			whateverVariableA		uint16_t
+			etc
+			
+			
+	Basestation Commands ----------------------------------
+		Drive			<0x21> (Basestation Command to Rover) []
+			driveFwd				int16_t		Forward/Reverse drive command
+			driveSteer				int16_t		Left/Right drive component
+			
+		Arm				<0x22>
+			baseAzimuth				int16_t
+			shoulder				int16_t
+			elbow					int16_t
+			wristTilt				int16_t
+			wristRotate				int16_t
+			effectorA				int16_t
+			effectorB				int16_t
+			effectorC				int16_t
+			
+		Gimbal			<0x23> (Basestation Command to Rover) []
+			gimbalPan				int16_t		Gimbal Pan
+			gimbalTilt				int16_t		Gimbal Tilt
+			gimbalZoom				int16_t		Gimbal Zoom
+			
+		GPS				<0x24> (Basestation Command to Rover) []
+			nothing					-			Would much prefer that we don't modify the GPS remotely.
+			
+		IMU				<0x25> (Basestation Command to Rover) []
+			nothing					-			Would much prefer that we don't modify the IMU remotely.
+			
+		ISHAAMA			<0x26> (Basestation Command to Rover) []
+			nothing					-			The Hygrometer & ph Meter probably just read, no setup.
+			
+		LIFERAY			<0x27> (Basestation Command to Rover) []
+			laserDutyCycle			uint8_t		The ultraviolet laser is PWM controlled.
+			
+
+
+			
+			
+			
+Notes on Sequence Counter:
+	Each node in the network (namely, the two controllers on the rover and the basestation laptop) keeps in mind
+	the sequence number it gets from each other member. Its own sequence number is incremented on each packet it 
+	transmits. The sequence number guarantees that the system processes only the newest packet possible. This is 
+	because UDP and Ethernet in general can re-order packets, due to network kinks and such. So, a packet might 
+	arrive at the Rover, but then get held up in line while other packets are sent to the respective boards. New
+	packets come in, and might jump in line ahead of our intrepid packet/hero we are watching. Those packets get 
+	sent as well, and then finally our intrepid packet/hero gets read by the Main controller board. The main 
+	controller sees our intrepid hero packet is older than the other packets that skipped in front, and were 
+	basically the more recent orders that our intrepid hero packet represented. Having been beaten by its 
+	successors, it is discarded and wanders the countryside looking for new adventures.
+	
+	The only snag in this mechanism is when the sequence count rolls over. When this occurs, the board chewing on
+	the UDP packets must do a sanity check and see if the difference between the most recent packet seq number 
+	and the current one being read are huge, is so, that means that the number rolled, and this vastly smaller
+	seq number on the incoming packet is valid. The requirement here is that packets can never be left in the 
+	Ethernet system so long that they survive to be read one sequence roll period later. Otherwise, say the 
+	seq numbers roll ever 5 minutes, and you command the laser to turn on now, and that packet gets jammed in the 
+	system for 5 minutes, by which time you would have turned off the laser. At 5 minutes, the actual seq number is, 
+	say, 3000, and the laser command packets have this value. The old jammed packet is 3450, which is "newer", and 
+	so if it becomes unjammed and read at this moment, the laser will switch on! Even though we may kill old packets,
+	we could still have jitter or glitches like this if the "sanity check" does not detect roll smoothly.
+	
+	
+	
+	
+List of tasks to preform:
+
+
+
+Main Controller Board:
+	Interrupt on UART Activity (5 or 1 Hz)
+		Parse GPS NMEA Sentences into inactive buffer.
+		When complete, swap active/inactive.
+		
+	Interrupt on Ethernet Data:
+		Read UDP Packet Payload into RAM
+		Check Seq#: If old, discard; way old or new, keep.
+		If kept the packet, update expected Seq# 
+		Write respective volatile memory variables.
+		
+	Interrupt on Group A Rollover (~20 Hz)
+		For each message in Telemetry Group A:
+			Assemble message packet
+			Send packet to Ethernet IC
+			Increment our Seq#
+			
+	Interrupt on Group B Rollover (~1 Hz)
+		Same as above, but occurs less frequent
+		
+	Interrupt on PWM Cycle Complete (50 Hz)
+		Write PWM Timers values from volatile variables.
+		
+	Interrupt on PPM Input Compare Port (~45 Hz)
+		Actually, this interrupt fires on each edge of the PPM Frame
+		Simply measures pulse-width and increments pulse count
+		Special case for missing pulse; resets count.
+		
+	Preform at ~10 Hz
+		Sample Analog Ports:
+			Rover Voltage
+			Rover Current
+			DragonLink RSSI (optional, not on chart)
+			Smooth data
+			Integrate Current
+		Read IMU Samples and smooth data.
+		Determine System state:
+			// If DragonLink ch8 (failsafe) asserted:
+			// 	Failsafe, all stop. This is the big red button basically, HAL is homicidal.
+			// Else:
+				If DragonLink is asserting control (ch7) and !ch8 (failsafe)
+					No problem, use Dragonlink for control.
+					Synthesize UDP packets for Arm Controller:
+						Issue with this, Seq# will not be aligned.
+						Dang, need to make more packet protocol stuff for this special case.
+						Or, have the main controller watch the Arm Packets' Seq#'s (Load intensive)
+						Conclusion: Don't do the arm control via DragonLink in backup-link mode.
+					If last message received from Basestation > timeout:
+						Throw warning that basestation link is lost (On OSD)
+				Else If last message received from Basestation > timeout:
+					Failsafe, all stop, signal lost ubnt link and suggest DragonLink.
+					Specifically:
+						Drive values set to neutral
+						Gimbal values set to default (optional)
+						Disable the big scary laser on the LIFERAY
+				Otherwise:
+					Use basestation commands
+					If DragonLink ch8 asserts (meaning it is failsafed):
+						Throw warning that DragonLink is lost link
+					
+					
+Arm Controller Board:
+	Interrupt on Ethernet Data:
+		Read UDP Packet Payload into RAM
+		Check Seq#: If old, discard; way old or new, keep.
+		If kept the packet, update expected Seq# 
+		Write respective volatile memory variables.
+		
+	Interrupt on Group B Rollover (~1 Hz)
+		Same as above, but occurs less frequent
+		
+	Interrupt on PWM Cycle Complete (50 Hz)
+		Write PWM Timers values from volatile variables.		
+
+	Interrupt on PWM Cycle Complete (50 Hz)
+		Write PWM Timers values from volatile variables.
+		
+	Preform at ~10 Hz
+		Sample Analog Ports:
+			Arm Potentiometers
+			Hygrometer
+			ph Meter
+			Smooth all data
+		Assert Dynamixel servo setpoints
+		Determine System state:
+			If Main Controller is Failsafe or last message received from Basestation > timeout:
+				Failsafe, all stop, signal lost ubnt link and suggest DragonLink.
+				Specifically:
+					Slowly relax the Dynamixels
+					Stop any drills/effectors
+					Freeze the arm and relax slowly if possible
+			Otherwise:
+				Use basestation commands
+
+
+
+
+
+
+
+
+		a: 0=Read, 1=Write
+0		0x00	000000	Board Health / Heartbeat
+1		0x01	000001	Rover Status
+2		0x02	000010	Arm Status
+3		0x03	000011	<Reserved>
+4		0x04	000100	GPS Position
+5		0x05	000101	IMU Samples
+6		0x06	000110	<Reserved>
+7		0x07	000111	Dragonlink Samples
+8		0x08	a01000	Rover Drive Setpoints
+9		0x09	a01001	Camera & Gimbal Setpoints
+10		0x0A	a01010	Arm Setpoints
+11		0x0B	a01011	ISHAAMA
+12		0x0C	a01100	LIFERAY
+13		0x0D	a01101	Custom Debug 3
+14		0x0E	a01110	Custom Debug 2
+15		0x0F	a01111	Custom Debug 1
+16		0x10	a10000	Ping
+17		0x11	a10001	Telemetry Config
+240		0xF0	110000	Request Single (One Shot)
+255		0xFF	111111	Broadcast
+
+
+
+Full Narrative
+(Turn on Word-wrap)
+
+The BYU Mars Rover will use a network link for control and telemetry this season, much as it has done for several years. For the past three (3) years that I've been apart of the project, we have used WiFi-compatible links, or some manner of connecting to the rover using Ethernet as the medium and WiFi or Ubiquity wireless terminals as the bridge. The reason why we do this is so that we can .... this is too verbose, need to go more boring, less fluf.
+
+We are using UDP. We've used it last year, and the years before. In 2012 and 2013, we used the Labjack, that cursed red box that promised to be awesome, but fritzed and barffed instead. What that device did was provide a set of UDP messages that you can transmit from anything (From Labview in the 
+
+systemTimestamp		uint32_t	-	0		4294967295	1ms/LSB
+cpuLoad				uint16_t	-	0		1000		0.1%/LSB
+busErrors			uint16_t	-	0		65535		#
+ethernetErrors		uint16_t	-	0		65535		#
+someOtherMetric		uint16_t				
+						
+	R					
+systemState			uint8_t		-			
+roverVoltage		uint16_t	-	0		60000		1mV/LSB
+roverCurrent		int16_t		-	-20000	20000		10mA/LSB
+mAhCounter			int32_t		-	0		100000		mAh/LSB
+ubntLinkInteg		uint16_t	-	0		1000		0.1%/LSB
+dragonLinkRSSI		uint16_t	-	0		1000		0.1%/LSB
+						
+	R					
+systemState			uint8_t				
+dynamixelErrors		uint16_t		0		65535		#
+PID 1 Error			int16_t				
+PID 2 Error Term						
+etc						
+						
+	R					
+						
+	R					
+lat					int32_t		-899999999	899999999	1e-7deg/LSB
+lon					int32_t		-1799999999	1799999999	1e-7deg/LSB
+alt					int32_t		-10000000	10000000	1mm/LSB
+hdop				uint16_t		0		60000		1cm/LSB
+vdop				uint16_t		0		60000		1cm/LSB
+vel					uint16_t		0		2000		1cm/s/LSB
+course				uint16_t		0		3599		0.1deg/LSB
+fix_type			uint8_t					
+sats				uint8_t			0		30			#
+							
+	R						
+xacc				int16_t				
+yacc				int16_t				
+zacc				int16_t				
+xgyro				int16_t				
+ygyro				int16_t				
+zgyro				int16_t				
+xmag				int16_t				
+ymag				int16_t				
+zmag				int16_t				
+							
+	R						
+							
+	R						
+ppmCh1				uint16_t	-	800		2200		1usec/LSB
+ppmCh2				uint16_t	-	800		2200		1usec/LSB
+ppmCh3				uint16_t	-	800		2200		1usec/LSB
+ppmCh4				uint16_t	-	800		2200		1usec/LSB
+ppmCh5				uint16_t	-	800		2200		1usec/LSB
+ppmCh6				uint16_t	-	800		2200		1usec/LSB
+ppmCh7				uint16_t	-	800		2200		1usec/LSB
+ppmCh8				uint16_t	-	800		2200		1usec/LSB
+								
+	R/W							
+driveFwd			int16_t		0	-1000	1000		0.1%/LSB
+driveSteer			int16_t		0	-1000	1000		0.1%/LSB
+								
+	R/W							
+gimbalPan			int16_t		0	-1000	1000		0.1%/LSB
+gimbalTilt			int16_t		0	-1000	1000		0.1%/LSB
+gimbalZoom			uint16_t	0	0		1000		0.1%/LSB
+cameraSelect		uint8_t					
+							
+	R/W						
+baseAzimuth			int16_t		0	-1000	1000		0.1%/LSB
+shoulder			int16_t		0	-1000	1000		0.1%/LSB
+elbow				int16_t		0	-1000	1000		0.1%/LSB
+wristTilt			int16_t		0	-1000	1000		0.1%/LSB
+wristRotate			int16_t		0	-1000	1000		0.1%/LSB
+effectorA			int16_t		0	-1000	1000		0.1%/LSB
+effectorB			int16_t		0	-1000	1000		0.1%/LSB
+effectorC			int16_t		0	-1000	1000		0.1%/LSB
+						
+	R/W					
+hygrometer			uint16_t		0		65535	
+phMeter				uint16_t		0		65535	
+						
+	R/W					
+laserDutyCycle		uint8_t			0		255	
+						
+	R/W					
+						
+	R/W					
+whateverVariableA	uint16_t				
+etc						
+						
+	R/W					
+whateverVariableA	uint16_t				
+etc						
+						
+						
+	R/W					
+Arbitrary Payload	8 bytes				
+						
+	R/W					
+telemetryMask_A		uint16_t				
+telemetryRate_A		uint8_t				
+telemetryMask_B		uint16_t				
+telemetryRate_B		uint8_t				
+						
+	W					
+oneShotMask			uint16_t				
+						
+	W					
+panicStop			uint8_t				
