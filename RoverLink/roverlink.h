@@ -12,7 +12,7 @@
 
 // Protocol notes are inserted at the bottom of this document.
 
-// Build Timestemp: 2014-11-21T07:43:02.793000
+// Build Timestemp: 2014-12-03T22:03:41.553000
 
 #include <stdint.h>
 
@@ -105,6 +105,7 @@ enum BOARD_ID{
 	BASESTATION_3 = 3,
 	MAIN_CONTROLLER = 13,
 	ARM_CONTROLLER = 10,
+	BROADCAST_ALIAS = 15,
 };
 
 // systemState field in the heartbeat and status messages that indicates board health
