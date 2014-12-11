@@ -8,3 +8,4 @@ Who has which WizNet Module?
 EF	Steve
 F0	Jake
 F1	Jeff
+F2  John
